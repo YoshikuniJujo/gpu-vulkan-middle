@@ -6,12 +6,14 @@ cabal-version: 1.12
 
 name:           gpu-vulkan-middle
 version:        0.1.0.54
-description:    Please see the README on GitHub at <https://github.com/YoshikuniJujo/tree/master/try-gpu-vulkan#readme>
-homepage:       https://github.com/githubuser/gpu-vulkan-middle#readme
-bug-reports:    https://github.com/githubuser/gpu-vulkan-middle/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2022 Author name here
+synopsis:       Medium wrapper for Vulkan API
+description:    Please see the README on GitHub at <https://github.com/YoshikuniJujo/gpu-vulkan-middle#readme>
+category:       GPU
+homepage:       https://github.com/YoshikuniJujo/gpu-vulkan-middle#readme
+bug-reports:    https://github.com/YoshikuniJujo/gpu-vulkan-middle/issues
+author:         Yoshikuni Jujo
+maintainer:     yoshikuni.jujo@gmail.com
+copyright:      2022 Yoshikuni Jujo
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -27,7 +29,7 @@ data-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/gpu-vulkan-middle
+  location: https://github.com/YoshikuniJujo/gpu-vulkan-middle
 
 library
   exposed-modules:
@@ -179,26 +181,26 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
-    , bytestring
-    , c-enum
-    , containers
-    , data-default
-    , exception-hierarchy
-    , gpu-vulkan-core
-    , hetero-parameter-list
-    , language-spir-v
-    , mtl
-    , mtl-misc-yj
-    , ranged-list
-    , stm
-    , storable-hetero-list
-    , storable-peek-poke
-    , template-haskell
-    , text
-    , text-misc-yj
-    , typelevel-tools-yj
-    , union-color
-    , uuid
+    , bytestring <1
+    , c-enum <1
+    , containers <1
+    , data-default <1
+    , exception-hierarchy <1
+    , gpu-vulkan-core <1
+    , hetero-parameter-list <1
+    , language-spir-v <1
+    , mtl <3
+    , mtl-misc-yj <1
+    , ranged-list <1
+    , stm <3
+    , storable-hetero-list <1
+    , storable-peek-poke <1
+    , template-haskell <3
+    , text <3
+    , text-misc-yj <1
+    , typelevel-tools-yj <1
+    , union-color <1
+    , uuid <2
   default-language: Haskell2010
 
 test-suite gpu-vulkan-middle-test
@@ -211,25 +213,25 @@ test-suite gpu-vulkan-middle-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
-    , bytestring
-    , c-enum
-    , containers
-    , data-default
-    , exception-hierarchy
-    , gpu-vulkan-core
+    , bytestring <1
+    , c-enum <1
+    , containers <1
+    , data-default <1
+    , exception-hierarchy <1
+    , gpu-vulkan-core <1
     , gpu-vulkan-middle
-    , hetero-parameter-list
-    , language-spir-v
-    , mtl
-    , mtl-misc-yj
-    , ranged-list
-    , stm
-    , storable-hetero-list
-    , storable-peek-poke
-    , template-haskell
-    , text
-    , text-misc-yj
-    , typelevel-tools-yj
-    , union-color
-    , uuid
+    , hetero-parameter-list <1
+    , language-spir-v <1
+    , mtl <3
+    , mtl-misc-yj <1
+    , ranged-list <1
+    , stm <3
+    , storable-hetero-list <1
+    , storable-peek-poke <1
+    , template-haskell <3
+    , text <3
+    , text-misc-yj <1
+    , typelevel-tools-yj <1
+    , union-color <1
+    , uuid <2
   default-language: Haskell2010

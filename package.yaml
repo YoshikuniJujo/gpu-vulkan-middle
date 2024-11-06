@@ -1,10 +1,10 @@
 name:                gpu-vulkan-middle
 version:             0.1.0.54
-github:              "githubuser/gpu-vulkan-middle"
+github:              "YoshikuniJujo/gpu-vulkan-middle"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2022 Author name here"
+author:              "Yoshikuni Jujo"
+maintainer:          "yoshikuni.jujo@gmail.com"
+copyright:           "2022 Yoshikuni Jujo"
 
 extra-source-files:
 - README.md
@@ -18,36 +18,36 @@ data-files:
 - th/vkShaderStageFlagBits.txt
 
 # Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
+synopsis:            Medium wrapper for Vulkan API
+category:            GPU
 
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/YoshikuniJujo/tree/master/try-gpu-vulkan#readme>
+description:         Please see the README on GitHub at <https://github.com/YoshikuniJujo/gpu-vulkan-middle#readme>
 
 dependencies:
 - base >= 4.7 && < 5
-- template-haskell
-- stm
-- containers
-- text
-- text-misc-yj
-- bytestring
-- data-default
-- mtl
-- mtl-misc-yj
-- uuid
-- c-enum
-- ranged-list
-- exception-hierarchy
-- union-color
-- hetero-parameter-list
-- storable-peek-poke
-- storable-hetero-list
-- gpu-vulkan-core
-- language-spir-v
-- typelevel-tools-yj
+- template-haskell < 3
+- stm < 3
+- containers < 1
+- text < 3
+- text-misc-yj < 1
+- bytestring  < 1
+- data-default < 1
+- mtl < 3
+- mtl-misc-yj < 1
+- uuid < 2
+- c-enum < 1
+- ranged-list < 1
+- exception-hierarchy < 1
+- union-color < 1
+- hetero-parameter-list < 1
+- storable-peek-poke < 1
+- storable-hetero-list < 1
+- gpu-vulkan-core < 1
+- language-spir-v < 1
+- typelevel-tools-yj < 1
 
 ghc-options:
 - -Wall
