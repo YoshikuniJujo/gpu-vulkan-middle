@@ -1,0 +1,169 @@
+name:                gpu-vulkan-middle
+version:             0.1.0.54
+github:              "githubuser/gpu-vulkan-middle"
+license:             BSD3
+author:              "Author name here"
+maintainer:          "example@example.com"
+copyright:           "2022 Author name here"
+
+extra-source-files:
+- README.md
+- CHANGELOG.md
+
+data-files:
+- th/vkFormat.txt
+- th/vkPhysicalDeviceDescriptorIndexingFeatures.txt
+- th/vkPhysicalDeviceFeatures.txt
+- th/vkPhysicalDeviceLimits.txt
+- th/vkShaderStageFlagBits.txt
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/YoshikuniJujo/tree/master/try-gpu-vulkan#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- template-haskell
+- stm
+- containers
+- text
+- text-misc-yj
+- bytestring
+- data-default
+- mtl
+- mtl-misc-yj
+- uuid
+- c-enum
+- ranged-list
+- exception-hierarchy
+- union-color
+- hetero-parameter-list
+- storable-peek-poke
+- storable-hetero-list
+- gpu-vulkan-core
+- language-spir-v
+- typelevel-tools-yj
+
+ghc-options:
+- -Wall
+- -Wcompat
+- -Widentities
+- -Wincomplete-record-updates
+- -Wincomplete-uni-patterns
+- -Wmissing-export-lists
+- -Wmissing-home-modules
+- -Wpartial-fields
+- -Wredundant-constraints
+
+library:
+  source-dirs: src
+  exposed-modules:
+  - Gpu.Vulkan.AllocationCallbacks.Middle
+  - Gpu.Vulkan.AllocationCallbacks.Middle.Internal
+  - Gpu.Vulkan.Attachment.Enum
+  - Gpu.Vulkan.Attachment.Middle
+  - Gpu.Vulkan.Base.Middle.Internal
+  - Gpu.Vulkan.Buffer.Enum
+  - Gpu.Vulkan.Buffer.Middle
+  - Gpu.Vulkan.BufferView.Middle
+  - Gpu.Vulkan.ColorComponent.Enum
+  - Gpu.Vulkan.Cmd.Middle
+  - Gpu.Vulkan.CommandBuffer.Enum
+  - Gpu.Vulkan.CommandBuffer.Middle
+  - Gpu.Vulkan.CommandPool.Enum
+  - Gpu.Vulkan.CommandPool.Middle
+  - Gpu.Vulkan.Component.Enum
+  - Gpu.Vulkan.Component.Middle
+  - Gpu.Vulkan.Data.Middle
+  - Gpu.Vulkan.Descriptor.Enum
+  - Gpu.Vulkan.Descriptor.Middle
+  - Gpu.Vulkan.DescriptorPool.Enum
+  - Gpu.Vulkan.DescriptorPool.Middle
+  - Gpu.Vulkan.DescriptorSet.Middle
+  - Gpu.Vulkan.DescriptorSetLayout.Enum
+  - Gpu.Vulkan.DescriptorSetLayout.Middle
+  - Gpu.Vulkan.DescriptorSetLayout.BindingFlags.Middle
+  - Gpu.Vulkan.Device.Enum
+  - Gpu.Vulkan.Device.Middle
+  - Gpu.Vulkan.Device.Middle.Internal
+  - Gpu.Vulkan.Enum
+  - Gpu.Vulkan.Exception.Enum
+  - Gpu.Vulkan.Exception.Middle
+  - Gpu.Vulkan.Fence.Enum
+  - Gpu.Vulkan.Fence.Middle
+  - Gpu.Vulkan.Fence.Middle.Internal
+  - Gpu.Vulkan.Framebuffer.Enum
+  - Gpu.Vulkan.Framebuffer.Middle
+  - Gpu.Vulkan.Image.Enum
+  - Gpu.Vulkan.Image.Middle
+  - Gpu.Vulkan.Image.Middle.Internal
+  - Gpu.Vulkan.ImageView.Enum
+  - Gpu.Vulkan.ImageView.Middle
+  - Gpu.Vulkan.Instance.Enum
+  - Gpu.Vulkan.Instance.Middle
+  - Gpu.Vulkan.Instance.Middle.Internal
+  - Gpu.Vulkan.Memory.Enum
+  - Gpu.Vulkan.Memory.Middle
+  - Gpu.Vulkan.Middle
+  - Gpu.Vulkan.PhysicalDevice.Enum
+  - Gpu.Vulkan.PhysicalDevice.Middle
+  - Gpu.Vulkan.PhysicalDevice.Middle.Internal
+  - Gpu.Vulkan.PhysicalDevice.Struct
+  - Gpu.Vulkan.PipelineCache.Enum
+  - Gpu.Vulkan.PipelineCache.Middle
+  - Gpu.Vulkan.Pipeline.ColorBlendAttachment.Middle
+  - Gpu.Vulkan.Pipeline.ColorBlendState.Middle
+  - Gpu.Vulkan.Pipeline.Compute.Middle
+  - Gpu.Vulkan.Pipeline.DepthStencilState.Middle
+  - Gpu.Vulkan.Pipeline.DynamicState.Middle
+  - Gpu.Vulkan.Pipeline.Enum
+  - Gpu.Vulkan.Pipeline.Graphics.Middle
+  - Gpu.Vulkan.Pipeline.InputAssemblyState.Middle
+  - Gpu.Vulkan.PipelineLayout.Middle
+  - Gpu.Vulkan.Pipeline.MultisampleState.Middle
+  - Gpu.Vulkan.Pipeline.RasterizationState.Middle
+  - Gpu.Vulkan.Pipeline.ShaderStage.Enum
+  - Gpu.Vulkan.Pipeline.ShaderStage.Middle
+  - Gpu.Vulkan.Pipeline.TessellationState.Middle
+  - Gpu.Vulkan.Pipeline.VertexInputState.Middle
+  - Gpu.Vulkan.Pipeline.ViewportState.Middle
+  - Gpu.Vulkan.PNext.Middle
+  - Gpu.Vulkan.PNext.Middle.Internal
+  - Gpu.Vulkan.PNextOld.Middle
+  - Gpu.Vulkan.PNextOld.Middle.Internal
+  - Gpu.Vulkan.PushConstant.Middle
+  - Gpu.Vulkan.Query.Enum
+  - Gpu.Vulkan.QueryPool.Middle
+  - Gpu.Vulkan.Queue.Enum
+  - Gpu.Vulkan.Queue.Middle
+  - Gpu.Vulkan.Queue.Middle.Internal
+  - Gpu.Vulkan.QueueFamily.Middle
+  - Gpu.Vulkan.RenderPass.Enum
+  - Gpu.Vulkan.RenderPass.Middle
+  - Gpu.Vulkan.Sample.Enum
+  - Gpu.Vulkan.Sample.Middle
+  - Gpu.Vulkan.Sampler.Enum
+  - Gpu.Vulkan.Sampler.Middle
+  - Gpu.Vulkan.Semaphore.Middle
+  - Gpu.Vulkan.Semaphore.Middle.Internal
+  - Gpu.Vulkan.ShaderModule.Middle
+  - Gpu.Vulkan.Subpass.Enum
+  - Gpu.Vulkan.Subpass.Middle
+  - Gpu.Vulkan.VertexInput.Enum
+  - Gpu.Vulkan.VertexInput.Middle
+
+tests:
+  gpu-vulkan-middle-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - gpu-vulkan-middle
