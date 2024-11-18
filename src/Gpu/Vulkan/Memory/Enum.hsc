@@ -17,7 +17,7 @@ import Data.Word
 #include <vulkan/vulkan.h>
 
 enum "PropertyFlagBits" ''#{type VkMemoryPropertyFlagBits}
-		[''Show, ''Eq, ''Storable, ''Bits] [
+		[''Show, ''Eq, ''Storable, ''Bits, ''FiniteBits] [
 	("PropertyFlagsZero", 0),
 	("PropertyDeviceLocalBit",
 		#{const VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT}),
