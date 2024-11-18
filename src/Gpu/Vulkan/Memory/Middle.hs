@@ -20,7 +20,7 @@ module Gpu.Vulkan.Memory.Middle (
 
 	-- * MEMORY TYPE
 
-	MType(..), TypeBits, TypeIndex, elemTypeIndex ) where
+	MType(..), TypeBits, TypeIndex, elemTypeIndex, Heap(..) ) where
 
 import Prelude hiding (map, lookup)
 import Gpu.Vulkan.Memory.Middle.Internal

@@ -18,7 +18,7 @@ module Gpu.Vulkan.Memory.Middle.Internal (
 	Requirements(..), requirementsFromCore,
 	Barrier(..), barrierToCore,
 
-	Heap, heapFromCore,
+	Heap(..), heapFromCore,
 
 	MType(..), mTypeFromCore,
 	TypeBits, TypeIndex, elemTypeIndex, typeBitsToTypeIndices
