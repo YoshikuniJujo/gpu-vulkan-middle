@@ -101,7 +101,7 @@ data CreateInfo mn = CreateInfo {
 	createInfoTiling :: Tiling,
 	createInfoUsage :: UsageFlags,
 	createInfoSharingMode :: SharingMode,
-	createInfoQueueFamilyIndices :: [Word32],
+	createInfoQueueFamilyIndices :: [QueueFamily.Index],
 	createInfoInitialLayout :: Layout }
 
 deriving instance Show (TMaybe.M mn) => Show (CreateInfo mn)
@@ -120,7 +120,8 @@ createInfoToCore CreateInfo {
 	createInfoTiling = Tiling tlng,
 	createInfoUsage = UsageFlagBits usg,
 	createInfoSharingMode = SharingMode sm,
-	createInfoQueueFamilyIndices = length &&& id -> (qfic, qfis),
+	createInfoQueueFamilyIndices =
+		length &&& (QueueFamily.unIndex <$>) -> (qfic, qfis),
 	createInfoInitialLayout = Layout lyt } f =
 	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
 	allocaArray qfic \pqfis -> do
