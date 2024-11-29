@@ -25,6 +25,7 @@ enum "FlagBits" ''#{type VkQueueFlagBits}
 	("SparseBindingBit", #{const VK_QUEUE_SPARSE_BINDING_BIT}),
 	("ProtectedBit", #{const VK_QUEUE_PROTECTED_BIT}),
 	("VideoDecodeBitKhr", #{const VK_QUEUE_VIDEO_DECODE_BIT_KHR}),
+	("VideoEncodeBitKhr", #{const VK_QUEUE_VIDEO_ENCODE_BIT_KHR}),
 	("OpticalFlowBitNv", #{const VK_QUEUE_OPTICAL_FLOW_BIT_NV}),
 	("FlagBitsMaxEnum", #{const VK_QUEUE_FLAG_BITS_MAX_ENUM}) ]
 

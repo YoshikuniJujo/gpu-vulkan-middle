@@ -87,6 +87,8 @@ enum "Type" ''#{type VkQueryType}
 		#{const VK_QUERY_TYPE_ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV}),
 	("TypePerformanceQueryIntel",
 		#{const VK_QUERY_TYPE_PERFORMANCE_QUERY_INTEL}),
+	("TypeVideoEncodeFeedbackKhr",
+		#{const VK_QUERY_TYPE_VIDEO_ENCODE_FEEDBACK_KHR}),
 	("TypeMeshPrimitivesGeneratedExt",
 		#{const VK_QUERY_TYPE_MESH_PRIMITIVES_GENERATED_EXT}),
 	("TypePrimitivesGeneratedExt",

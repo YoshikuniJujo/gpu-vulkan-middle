@@ -35,6 +35,8 @@ import qualified VulkanQueueEnum
 
 import qualified VulkanQueryEnum
 
+import qualified VulkanSparseEnum
+
 main :: IO ()
 main = do
 	VulkanEnum.make
@@ -69,3 +71,5 @@ main = do
 	VulkanQueueEnum.make
 
 	VulkanQueryEnum.make
+
+	VulkanSparseEnum.make

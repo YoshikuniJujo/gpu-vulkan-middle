@@ -49,6 +49,10 @@ enum "Contents" ''#{type VkSubpassContents}
 	("ContentsInline", #{const VK_SUBPASS_CONTENTS_INLINE}),
 	("ContentsSecondaryCommandBuffers",
 		#{const VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS}),
+	("ContentsInlineAndSecondaryCommandBuffersKhr",
+		#{const VK_SUBPASS_CONTENTS_INLINE_AND_SECONDARY_COMMAND_BUFFERS_KHR}),
+	("ContentsInlineAndSecondaryCommandBuffersExt",
+		#{const VK_SUBPASS_CONTENTS_INLINE_AND_SECONDARY_COMMAND_BUFFERS_EXT}),
 	("ContentsMaxEnum", #{const VK_SUBPASS_CONTENTS_MAX_ENUM}) ]
 
 type DescriptionFlags = DescriptionFlagBits

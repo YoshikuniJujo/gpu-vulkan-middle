@@ -41,7 +41,7 @@ enum "PropertyFlagBits" ''#{type VkMemoryPropertyFlagBits}
 		#{const VK_MEMORY_PROPERTY_FLAG_BITS_MAX_ENUM}) ]
 
 enum "HeapFlagBits" ''#{type VkMemoryHeapFlagBits}
-		[''Show, ''Eq, ''Storable, ''Bits] [
+		[''Show, ''Eq, ''Storable, ''Bits, ''FiniteBits] [
 	("HeapFlagsZero", 0),
 	("HeapDeviceLocalBit", #{const VK_MEMORY_HEAP_DEVICE_LOCAL_BIT}),
 	("HeapMultiInstanceBit",

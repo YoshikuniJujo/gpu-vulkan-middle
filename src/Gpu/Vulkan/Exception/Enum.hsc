@@ -73,10 +73,14 @@ enum "Result" ''#{type VkResult}
 	("ThreadDoneKhr", #{const VK_THREAD_DONE_KHR}),
 	("OperationDeferredKhr", #{const VK_OPERATION_DEFERRED_KHR}),
 	("OperationNotDeferredKhr", #{const VK_OPERATION_NOT_DEFERRED_KHR}),
+	("ErrorInvalidVideoStdParametersKhr",
+		#{const VK_ERROR_INVALID_VIDEO_STD_PARAMETERS_KHR}),
 	("ErrorCompressionExhaustedExt",
 		#{const VK_ERROR_COMPRESSION_EXHAUSTED_EXT}),
-	("ErrorIncompatibleShaderBinaryExt",
-		#{const VK_ERROR_INCOMPATIBLE_SHADER_BINARY_EXT}),
+	("IncompatibleShaderBinaryExt",
+		#{const VK_INCOMPATIBLE_SHADER_BINARY_EXT}),
+	("PipelineBinaryMissingKhr", #{const VK_PIPELINE_BINARY_MISSING_KHR}),
+	("ErrorNotEnoughSpaceKhr", #{const VK_ERROR_NOT_ENOUGH_SPACE_KHR}),
 	("ErrorOutOfPoolMemoryKhr", #{const VK_ERROR_OUT_OF_POOL_MEMORY_KHR}),
 	("ErrorInvalidExternalHandleKhr",
 		#{const VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR}),
@@ -90,6 +94,8 @@ enum "Result" ''#{type VkResult}
 		#{const VK_PIPELINE_COMPILE_REQUIRED_EXT}),
 	("ErrorPipelineCompileRequiredExt",
 		#{const VK_ERROR_PIPELINE_COMPILE_REQUIRED_EXT}),
+	("ErrorIncompatibleShaderBinaryExt",
+		#{const VK_ERROR_INCOMPATIBLE_SHADER_BINARY_EXT}),
 	("ResultMaxEnum", #{const VK_RESULT_MAX_ENUM}) ]
 
 type PtrResult = Result

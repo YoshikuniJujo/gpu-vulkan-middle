@@ -1,5 +1,5 @@
 {-# LANGUAGE QuasiQuotes #-}
-{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE BlockArguments, LambdaCase #-}
 {-# OPTIONS_GHC -Wall -fno-warn-tabs #-}
 
 module MakeEnum where
@@ -84,15 +84,19 @@ makeEnum :: HeaderCode -> (HaskellName, CName, [DerivName]) -> HaskellCode
 makeEnum src (hsnm, cnm, drvs) = body hsnm cnm drvs ++
 	intercalate ",\n"
 		(map makeItem . takeDefinition cnm
-			. removeBetaExtensions $ lines src ) ++
+			. removeBetaExtensions . filterOutCommentLine $ lines src ) ++
 		" ]\n"
 
 makeEnum' :: HeaderCode -> ModuleName -> [(String, Const)] -> (HaskellName, CName, [DerivName]) -> HaskellCode
 makeEnum' src mnm elms (hsnm, cnm, drvs) = body hsnm cnm drvs ++
 	intercalate ",\n"
 		(map (makeItem' mnm) . (elms ++) . removeDups [] . map makeVarConstPair . takeDefinition cnm
-			. removeBetaExtensions $ lines src ) ++
+			. removeBetaExtensions . filterOutCommentLine $ lines src ) ++
 		" ]\n"
+
+filterOutCommentLine :: [String] -> [String]
+filterOutCommentLine = filter \ln ->
+	let ws = words ln in not (null ws) && head ws /= "//"
 
 removeDups :: [String] -> [(String, Const)] -> [(String, Const)]
 removeDups _ [] = []

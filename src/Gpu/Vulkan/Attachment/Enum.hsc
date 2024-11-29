@@ -29,6 +29,7 @@ enum "LoadOp" ''#{type VkAttachmentLoadOp}
 	("LoadOpLoad", #{const VK_ATTACHMENT_LOAD_OP_LOAD}),
 	("LoadOpClear", #{const VK_ATTACHMENT_LOAD_OP_CLEAR}),
 	("LoadOpDontCare", #{const VK_ATTACHMENT_LOAD_OP_DONT_CARE}),
+	("LoadOpNoneKhr", #{const VK_ATTACHMENT_LOAD_OP_NONE_KHR}),
 	("LoadOpNoneExt", #{const VK_ATTACHMENT_LOAD_OP_NONE_EXT}),
 	("LoadOpMaxEnum", #{const VK_ATTACHMENT_LOAD_OP_MAX_ENUM}) ]
 

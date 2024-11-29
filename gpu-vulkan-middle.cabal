@@ -172,6 +172,9 @@ library
       Gpu.Vulkan.Sample.Middle.Internal
       Gpu.Vulkan.Sampler.Middle.Internal
       Gpu.Vulkan.ShaderModule.Middle.Internal
+      Gpu.Vulkan.Sparse.Enum
+      Gpu.Vulkan.Sparse.Middle
+      Gpu.Vulkan.Sparse.Middle.Internal
       Gpu.Vulkan.Specialization.Middle.Internal
       Gpu.Vulkan.Subpass.Middle.Internal
       Gpu.Vulkan.VertexInput.Middle.Internal

@@ -94,6 +94,8 @@ enum "StageFlagBits" ''#{type VkPipelineStageFlagBits}
 	("StageMeshShaderBitNv",
 		#{const VK_PIPELINE_STAGE_MESH_SHADER_BIT_NV}),
 	("StageNoneKhr", #{const VK_PIPELINE_STAGE_NONE_KHR}),
+	("StageCommandPreprocessBitExt",
+		#{const VK_PIPELINE_STAGE_COMMAND_PREPROCESS_BIT_EXT}),
 	("StageFlagBitsMaxEnum",
 		#{const VK_PIPELINE_STAGE_FLAG_BITS_MAX_ENUM}) ]
 
