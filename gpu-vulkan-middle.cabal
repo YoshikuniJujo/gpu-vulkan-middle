@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           gpu-vulkan-middle
-version:        0.1.0.57
+version:        0.1.0.58
 synopsis:       Medium wrapper for Vulkan API
 description:    Please see the README on GitHub at <https://github.com/YoshikuniJujo/gpu-vulkan-middle#readme>
 category:       GPU
@@ -126,6 +126,7 @@ library
       Gpu.Vulkan.Subpass.Middle
       Gpu.Vulkan.VertexInput.Enum
       Gpu.Vulkan.VertexInput.Middle
+      Gpu.Vulkan.Sparse.Middle
   other-modules:
       Gpu.Vulkan.Attachment.Middle.Internal
       Gpu.Vulkan.Base.Middle
@@ -173,7 +174,6 @@ library
       Gpu.Vulkan.Sampler.Middle.Internal
       Gpu.Vulkan.ShaderModule.Middle.Internal
       Gpu.Vulkan.Sparse.Enum
-      Gpu.Vulkan.Sparse.Middle
       Gpu.Vulkan.Sparse.Middle.Internal
       Gpu.Vulkan.Specialization.Middle.Internal
       Gpu.Vulkan.Subpass.Middle.Internal
