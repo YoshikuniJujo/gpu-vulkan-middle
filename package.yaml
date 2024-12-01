@@ -158,6 +158,7 @@ library:
   - Gpu.Vulkan.VertexInput.Middle
   - Gpu.Vulkan.Sparse.Middle
   - Gpu.Vulkan.Sparse.Buffer.Middle
+  - Gpu.Vulkan.Sparse.Image.Middle
 
 tests:
   gpu-vulkan-middle-test:

@@ -128,6 +128,7 @@ library
       Gpu.Vulkan.VertexInput.Middle
       Gpu.Vulkan.Sparse.Middle
       Gpu.Vulkan.Sparse.Buffer.Middle
+      Gpu.Vulkan.Sparse.Image.Middle
   other-modules:
       Gpu.Vulkan.Attachment.Middle.Internal
       Gpu.Vulkan.Base.Middle
@@ -176,6 +177,7 @@ library
       Gpu.Vulkan.ShaderModule.Middle.Internal
       Gpu.Vulkan.Sparse.Buffer.Middle.Internal
       Gpu.Vulkan.Sparse.Enum
+      Gpu.Vulkan.Sparse.Image.Middle.Internal
       Gpu.Vulkan.Sparse.Middle.Internal
       Gpu.Vulkan.Specialization.Middle.Internal
       Gpu.Vulkan.Subpass.Middle.Internal
