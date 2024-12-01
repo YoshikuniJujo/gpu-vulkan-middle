@@ -157,6 +157,7 @@ library:
   - Gpu.Vulkan.VertexInput.Enum
   - Gpu.Vulkan.VertexInput.Middle
   - Gpu.Vulkan.Sparse.Middle
+  - Gpu.Vulkan.Sparse.Buffer.Middle
 
 tests:
   gpu-vulkan-middle-test:
