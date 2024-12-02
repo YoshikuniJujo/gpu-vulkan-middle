@@ -31,7 +31,11 @@ module Gpu.Vulkan.Image.Middle.Internal (
 	-- * BLIT
 
 	Blit(..), blitToCore,
-	SubresourceLayers(..), subresourceLayersToCore
+	SubresourceLayers(..), subresourceLayersToCore,
+
+	-- * OTHERS
+
+	Subresource(..), subresourceToCore
 
 	) where
 
@@ -333,3 +337,16 @@ blitToCore Blit {
 	C.blitSrcOffsets = [sof, sot],
 	C.blitDstSubresource = subresourceLayersToCore dsr,
 	C.blitDstOffsets = [dof, dot] }
+
+data Subresource = Subresource {
+	subresourceAspectMask :: AspectFlags,
+	subresourceMipLevel :: Word32,
+	subresourceArrayLayer :: Word32 }
+	deriving Show
+
+subresourceToCore :: Subresource -> C.Subresource
+subresourceToCore Subresource {
+	subresourceAspectMask = AspectFlagBits am,
+	subresourceMipLevel = ml, subresourceArrayLayer = al } = C.Subresource {
+	C.subresourceAspectMask = am,
+	C.subresourceMipLevel = ml, C.subresourceArrayLayer = al }
