@@ -12,7 +12,7 @@ import Control.Arrow
 import Data.IORef
 
 import Gpu.Vulkan.Middle
-import Gpu.Vulkan.Device.Middle qualified as Device
+import Gpu.Vulkan.Device.Middle.Internal qualified as Device
 import Gpu.Vulkan.Memory.Middle.Internal qualified as Memory
 import Gpu.Vulkan.Image.Middle.Internal qualified as Image
 import Gpu.Vulkan.Sparse.Enum qualified as S
@@ -45,3 +45,20 @@ data MemoryBind = MemoryBind {
 	memoryBindMemory :: Memory.M,
 	memoryBindMemoryOffset :: Device.Size,
 	memoryBindFlags :: S.MemoryBindFlags }
+
+memoryBindToCore :: MemoryBind -> IO C.MemoryBind
+memoryBindToCore MemoryBind {
+	memoryBindSubresource = sr,
+	memoryBindOffset = o,
+	memoryBindExtent = e,
+	memoryBindMemory = Memory.M rm,
+	memoryBindMemoryOffset = Device.Size mo,
+	memoryBindFlags = S.MemoryBindFlagBits fs } = do
+	m <- readIORef rm
+	pure C.MemoryBind {
+		C.memoryBindSubresource = Image.subresourceToCore sr,
+		C.memoryBindOffset = o,
+		C.memoryBindExtent = e,
+		C.memoryBindMemory = m,
+		C.memoryBindMemoryOffset = mo,
+		C.memoryBindFlags = fs }
