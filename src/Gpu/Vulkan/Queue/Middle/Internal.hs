@@ -13,11 +13,19 @@ module Gpu.Vulkan.Queue.Middle.Internal (
 
 	-- * SUBMIT AND WAIT IDLE
 
-	submit, waitIdle, Q(..)
+	submit, waitIdle, Q(..),
+
+	-- * SPARSE RESOURCES
+
+	BindSparseInfo(..), bindSparseInfoToCore
 
 	) where
 
+import Foreign.Ptr
 import Foreign.Marshal.Array
+import Foreign.Storable.PeekPoke
+import Control.Arrow
+import Control.Monad.Cont.MiscYj
 import Data.HeteroParList qualified as HeteroParList
 
 import Gpu.Vulkan.Middle
@@ -25,6 +33,12 @@ import Gpu.Vulkan.Exception.Middle.Internal
 import Gpu.Vulkan.Exception.Enum
 import Gpu.Vulkan.Fence.Middle.Internal qualified as Fence.M
 import Gpu.Vulkan.Queue.Core qualified as C
+
+import Data.Kind
+import Data.TypeLevel.Maybe qualified as TMaybe
+import Gpu.Vulkan.Semaphore.Middle.Internal qualified as Semaphore
+import Gpu.Vulkan.Sparse.Buffer.Middle.Internal qualified as Sparse.Buffer
+import Gpu.Vulkan.Sparse.Image.Middle.Internal qualified as Sparse.Image
 
 newtype Q = Q C.Q deriving Show
 
@@ -39,3 +53,52 @@ submit (Q q) sis mf = submitInfoListToCore sis \csis ->
 
 waitIdle :: Q -> IO ()
 waitIdle (Q q) = throwUnlessSuccess . Result =<< C.waitIdle q
+
+data BindSparseInfo (mn :: Maybe Type) = BindSparseInfo {
+	bindSparseInfoNext :: TMaybe.M mn,
+	bindSparseInfoWaitSemaphores :: [Semaphore.S],
+	bindSparseInfoBufferBinds :: [Sparse.Buffer.MemoryBindInfo],
+	bindSparseInfoImageOpaqueBinds :: [Sparse.Image.OpaqueMemoryBindInfo],
+	bindSparseInfoImageBinds :: [Sparse.Image.MemoryBindInfo],
+	bindSparseInfoSignalSemaphores :: [Semaphore.S] }
+
+bindSparseInfoToCore :: WithPoked (TMaybe.M mn) =>
+	BindSparseInfo mn -> (Ptr C.BindSparseInfo -> IO a) -> IO ()
+bindSparseInfoToCore BindSparseInfo {
+	bindSparseInfoNext = mnxt,
+	bindSparseInfoWaitSemaphores =
+		length &&& (Semaphore.unS <$>) -> (wsc, wss),
+	bindSparseInfoBufferBinds = length &&& id -> (bbc, bbs),
+	bindSparseInfoImageOpaqueBinds = length &&& id -> (iobc, iobs),
+	bindSparseInfoImageBinds = length &&& id -> (ibc, ibs),
+	bindSparseInfoSignalSemaphores =
+		length &&& (Semaphore.unS <$>) -> (ssc, sss)
+	} f = withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
+		allocaArray wsc \pwss ->
+		pokeArray pwss wss >>
+		allocaArray bbc \pbbs ->
+		(Sparse.Buffer.memoryBindInfoToCore `mapContM` bbs) \cbbs ->
+		pokeArray pbbs cbbs >>
+		allocaArray iobc \piobs ->
+		(Sparse.Image.opaqueMemoryBindInfoToCore
+			`mapContM` iobs) \ciobs ->
+		pokeArray piobs ciobs >>
+		allocaArray ibc \pibs ->
+		(Sparse.Image.memoryBindInfoToCore `mapContM` ibs) \cibs ->
+		pokeArray pibs cibs >>
+		allocaArray ssc \psss ->
+		pokeArray psss sss >>
+		withPoked C.BindSparseInfo {
+			C.bindSparseInfoSType = (),
+			C.bindSparseInfoPNext = pnxt',
+			C.bindSparseInfoWaitSemaphoreCount = fromIntegral wsc,
+			C.bindSparseInfoPWaitSemaphores = pwss,
+			C.bindSparseInfoBufferBindCount = fromIntegral bbc,
+			C.bindSparseInfoPBufferBinds = pbbs,
+			C.bindSparseInfoImageOpaqueBindCount =
+				fromIntegral iobc,
+			C.bindSparseInfoPImageOpaqueBinds = piobs,
+			C.bindSparseInfoImageBindCount = fromIntegral ibc,
+			C.bindSparseInfoPImageBinds = pibs,
+			C.bindSparseInfoSignalSemaphoreCount = fromIntegral ssc,
+			C.bindSparseInfoPSignalSemaphores = psss } f

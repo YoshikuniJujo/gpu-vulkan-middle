@@ -19,14 +19,14 @@ data MemoryBindInfo = MemoryBindInfo {
 	memoryBindInfoBuffer :: Buffer.B,
 	memoryBindInfoBinds :: [MemoryBind] }
 
-memoryBindInfoToCore :: MemoryBindInfo -> (Ptr C.MemoryBindInfo -> IO a) -> IO a
+memoryBindInfoToCore :: MemoryBindInfo -> (C.MemoryBindInfo -> IO a) -> IO a
 memoryBindInfoToCore MemoryBindInfo {
 	memoryBindInfoBuffer = Buffer.B bffr,
 	memoryBindInfoBinds = length &&& id -> (bndc, bnds) } f = do
 	cbnds <- memoryBindToCore `mapM` bnds
 	allocaArray bndc \pbnds -> do
 		pokeArray pbnds cbnds
-		withPoked C.MemoryBindInfo {
+		f C.MemoryBindInfo {
 			C.memoryBindInfoBuffer = bffr,
 			C.memoryBindInfoBindCount = fromIntegral bndc,
-			C.memoryBindInfoPBinds = pbnds } f
+			C.memoryBindInfoPBinds = pbnds }

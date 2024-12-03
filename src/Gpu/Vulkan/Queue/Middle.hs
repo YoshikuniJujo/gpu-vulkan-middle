@@ -4,6 +4,12 @@ module Gpu.Vulkan.Queue.Middle (
 
 	-- * SUBMIT AND WAIT IDLE
 
-	submit, waitIdle, Q ) where
+	submit, waitIdle, Q,
+
+	-- * SPARSE RESOURCES
+
+	BindSparseInfo(..),
+
+	) where
 
 import Gpu.Vulkan.Queue.Middle.Internal

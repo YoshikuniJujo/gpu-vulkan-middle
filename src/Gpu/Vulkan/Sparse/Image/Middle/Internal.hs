@@ -25,7 +25,7 @@ data OpaqueMemoryBindInfo = OpaqueMemoryBindInfo {
 	opaqueMemoryBindInfoBinds :: [S.MemoryBind] }
 
 opaqueMemoryBindInfoToCore ::
-	OpaqueMemoryBindInfo -> (Ptr C.OpaqueMemoryBindInfo -> IO a) -> IO a
+	OpaqueMemoryBindInfo -> (C.OpaqueMemoryBindInfo -> IO a) -> IO a
 opaqueMemoryBindInfoToCore OpaqueMemoryBindInfo {
 	opaqueMemoryBindInfoImage = Image.I ir,
 	opaqueMemoryBindInfoBinds = length &&& id -> (bc, bs) } f = do
@@ -33,17 +33,17 @@ opaqueMemoryBindInfoToCore OpaqueMemoryBindInfo {
 	cbs <- S.memoryBindToCore `mapM` bs
 	allocaArray bc \pbs -> do
 		pokeArray pbs cbs
-		withPoked C.OpaqueMemoryBindInfo {
+		f C.OpaqueMemoryBindInfo {
 			C.opaqueMemoryBindInfoImage = i,
 			C.opaqueMemoryBindInfoBindCount = fromIntegral bc,
-			C.opaqueMemoryBindInfoPBinds = pbs } f
+			C.opaqueMemoryBindInfoPBinds = pbs }
 
 data MemoryBindInfo = MemoryBindInfo {
 	memoryBindInfoImage :: Image.I,
 	memoryBindInfoBinds :: [MemoryBind] }
 
 memoryBindInfoToCore ::
-	MemoryBindInfo -> (Ptr C.MemoryBindInfo -> IO a) -> IO a
+	MemoryBindInfo -> (C.MemoryBindInfo -> IO a) -> IO a
 memoryBindInfoToCore MemoryBindInfo {
 	memoryBindInfoImage = Image.I ir,
 	memoryBindInfoBinds = length &&& id -> (bc, bs) } f =  do
@@ -51,10 +51,10 @@ memoryBindInfoToCore MemoryBindInfo {
 	cbs <- memoryBindToCore `mapM` bs
 	allocaArray bc \pbs -> do
 		pokeArray pbs cbs
-		withPoked C.MemoryBindInfo {
+		f C.MemoryBindInfo {
 			C.memoryBindInfoImage = i,
 			C.memoryBindInfoBindCount = fromIntegral bc,
-			C.memoryBindInfoPBinds = pbs } f
+			C.memoryBindInfoPBinds = pbs }
 
 data MemoryBind = MemoryBind {
 	memoryBindSubresource :: Image.Subresource,
