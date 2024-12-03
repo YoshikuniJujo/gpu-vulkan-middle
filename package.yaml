@@ -156,6 +156,7 @@ library:
   - Gpu.Vulkan.Subpass.Middle
   - Gpu.Vulkan.VertexInput.Enum
   - Gpu.Vulkan.VertexInput.Middle
+  - Gpu.Vulkan.Sparse.Enum
   - Gpu.Vulkan.Sparse.Middle
   - Gpu.Vulkan.Sparse.Buffer.Middle
   - Gpu.Vulkan.Sparse.Image.Middle

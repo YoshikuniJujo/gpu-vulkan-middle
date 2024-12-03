@@ -38,6 +38,24 @@ opaqueMemoryBindInfoToCore OpaqueMemoryBindInfo {
 			C.opaqueMemoryBindInfoBindCount = fromIntegral bc,
 			C.opaqueMemoryBindInfoPBinds = pbs } f
 
+data MemoryBindInfo = MemoryBindInfo {
+	memoryBindInfoImage :: Image.I,
+	memoryBindInfoBinds :: [MemoryBind] }
+
+memoryBindInfoToCore ::
+	MemoryBindInfo -> (Ptr C.MemoryBindInfo -> IO a) -> IO a
+memoryBindInfoToCore MemoryBindInfo {
+	memoryBindInfoImage = Image.I ir,
+	memoryBindInfoBinds = length &&& id -> (bc, bs) } f =  do
+	(_, i) <- readIORef ir
+	cbs <- memoryBindToCore `mapM` bs
+	allocaArray bc \pbs -> do
+		pokeArray pbs cbs
+		withPoked C.MemoryBindInfo {
+			C.memoryBindInfoImage = i,
+			C.memoryBindInfoBindCount = fromIntegral bc,
+			C.memoryBindInfoPBinds = pbs } f
+
 data MemoryBind = MemoryBind {
 	memoryBindSubresource :: Image.Subresource,
 	memoryBindOffset :: Offset3d,
