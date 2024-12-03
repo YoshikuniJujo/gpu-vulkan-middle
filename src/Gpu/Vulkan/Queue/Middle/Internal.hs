@@ -17,7 +17,7 @@ module Gpu.Vulkan.Queue.Middle.Internal (
 
 	-- * SPARSE RESOURCES
 
-	BindSparseInfo(..), bindSparseInfoToCore
+	bindSparse, BindSparseInfo(..), bindSparseInfoToCore
 
 	) where
 
@@ -36,9 +36,11 @@ import Gpu.Vulkan.Queue.Core qualified as C
 
 import Data.Kind
 import Data.TypeLevel.Maybe qualified as TMaybe
+import Data.HeteroParList qualified as HPList
 import Gpu.Vulkan.Semaphore.Middle.Internal qualified as Semaphore
 import Gpu.Vulkan.Sparse.Buffer.Middle.Internal qualified as Sparse.Buffer
 import Gpu.Vulkan.Sparse.Image.Middle.Internal qualified as Sparse.Image
+import Gpu.Vulkan.Fence.Middle.Internal qualified as Fence
 
 newtype Q = Q C.Q deriving Show
 
@@ -54,6 +56,15 @@ submit (Q q) sis mf = submitInfoListToCore sis \csis ->
 waitIdle :: Q -> IO ()
 waitIdle (Q q) = throwUnlessSuccess . Result =<< C.waitIdle q
 
+bindSparse :: HPList.ToListWithCCpsM' WithPoked TMaybe.M mns =>
+	Q -> HPList.PL BindSparseInfo mns -> Fence.F -> IO ()
+bindSparse (Q q) is (Fence.F f) =
+	HPList.withListWithCCpsM' @_ @WithPoked @TMaybe.M is bindSparseInfoToCore \cis ->
+	let cic = length cis in
+	allocaArray cic \pcis ->
+	pokeArray pcis cis >>
+	(throwUnlessSuccess . Result =<< C.bindSparse q (fromIntegral cic) pcis f)
+
 data BindSparseInfo (mn :: Maybe Type) = BindSparseInfo {
 	bindSparseInfoNext :: TMaybe.M mn,
 	bindSparseInfoWaitSemaphores :: [Semaphore.S],
@@ -63,7 +74,7 @@ data BindSparseInfo (mn :: Maybe Type) = BindSparseInfo {
 	bindSparseInfoSignalSemaphores :: [Semaphore.S] }
 
 bindSparseInfoToCore :: WithPoked (TMaybe.M mn) =>
-	BindSparseInfo mn -> (Ptr C.BindSparseInfo -> IO a) -> IO ()
+	BindSparseInfo mn -> (C.BindSparseInfo -> IO a) -> IO ()
 bindSparseInfoToCore BindSparseInfo {
 	bindSparseInfoNext = mnxt,
 	bindSparseInfoWaitSemaphores =
@@ -88,7 +99,7 @@ bindSparseInfoToCore BindSparseInfo {
 		pokeArray pibs cibs >>
 		allocaArray ssc \psss ->
 		pokeArray psss sss >>
-		withPoked C.BindSparseInfo {
+		f C.BindSparseInfo {
 			C.bindSparseInfoSType = (),
 			C.bindSparseInfoPNext = pnxt',
 			C.bindSparseInfoWaitSemaphoreCount = fromIntegral wsc,
@@ -101,4 +112,4 @@ bindSparseInfoToCore BindSparseInfo {
 			C.bindSparseInfoImageBindCount = fromIntegral ibc,
 			C.bindSparseInfoPImageBinds = pibs,
 			C.bindSparseInfoSignalSemaphoreCount = fromIntegral ssc,
-			C.bindSparseInfoPSignalSemaphores = psss } f
+			C.bindSparseInfoPSignalSemaphores = psss }

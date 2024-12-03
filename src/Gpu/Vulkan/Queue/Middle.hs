@@ -8,7 +8,7 @@ module Gpu.Vulkan.Queue.Middle (
 
 	-- * SPARSE RESOURCES
 
-	BindSparseInfo(..),
+	bindSparse, BindSparseInfo(..),
 
 	) where
 
