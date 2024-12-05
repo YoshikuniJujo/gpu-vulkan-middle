@@ -43,6 +43,9 @@ import Gpu.Vulkan.Sparse.Buffer.Middle.Internal qualified as Sparse.Buffer
 import Gpu.Vulkan.Sparse.Image.Middle.Internal qualified as Sparse.Image
 import Gpu.Vulkan.Fence.Middle.Internal qualified as Fence
 
+import Control.Monad
+import Debug
+
 newtype Q = Q C.Q deriving Show
 
 submit :: SubmitInfoListToCore ns =>
@@ -60,6 +63,8 @@ waitIdle (Q q) = throwUnlessSuccess . Result =<< C.waitIdle q
 bindSparse :: HPList.ToListWithCCpsM' WithPoked TMaybe.M mns =>
 	Q -> HPList.PL BindSparseInfo mns -> Maybe Fence.F -> IO ()
 bindSparse (Q q) is mf =
+	when debug (putStrLn
+		"Gpu.Vulkan.Queue.Middle.bindSparse begin") >>
 	HPList.withListWithCCpsM' @_ @WithPoked @TMaybe.M is bindSparseInfoToCore \cis ->
 	let cic = length cis in
 	allocaArray cic \pcis ->
@@ -67,6 +72,8 @@ bindSparse (Q q) is mf =
 	let cf = case mf of
 		Just (Fence.F f) -> f
 		Nothing -> NullHandle in
+	when debug (putStrLn
+		"Gpu.Vulkan.Queue.Middle.bindSparse: before C.bindSparse") >>
 	(throwUnlessSuccess . Result =<< C.bindSparse q (fromIntegral cic) pcis cf)
 
 data BindSparseInfo (mn :: Maybe Type) = BindSparseInfo {

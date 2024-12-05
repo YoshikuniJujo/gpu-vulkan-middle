@@ -1,5 +1,5 @@
 name:                gpu-vulkan-middle
-version:             0.1.0.59
+version:             0.1.0.60
 github:              "YoshikuniJujo/gpu-vulkan-middle"
 license:             BSD3
 author:              "Yoshikuni Jujo"
@@ -25,6 +25,11 @@ category:            GPU
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
 description:         Please see the README on GitHub at <https://github.com/YoshikuniJujo/gpu-vulkan-middle#readme>
+
+flags:
+  debug:
+    manual: true
+    default: false
 
 dependencies:
 - base >= 4.7 && < 5
@@ -62,6 +67,12 @@ ghc-options:
 
 library:
   source-dirs: src
+  when:
+    - condition: flag(debug)
+      then:
+        source-dirs: debug
+      else:
+        source-dirs: nodebug
   exposed-modules:
   - Gpu.Vulkan.AllocationCallbacks.Middle
   - Gpu.Vulkan.AllocationCallbacks.Middle.Internal
