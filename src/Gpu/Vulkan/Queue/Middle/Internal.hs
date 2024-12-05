@@ -28,6 +28,7 @@ import Control.Arrow
 import Control.Monad.Cont.MiscYj
 import Data.HeteroParList qualified as HeteroParList
 
+import Gpu.Vulkan.Base.Middle
 import Gpu.Vulkan.Middle
 import Gpu.Vulkan.Exception.Middle.Internal
 import Gpu.Vulkan.Exception.Enum
@@ -57,13 +58,16 @@ waitIdle :: Q -> IO ()
 waitIdle (Q q) = throwUnlessSuccess . Result =<< C.waitIdle q
 
 bindSparse :: HPList.ToListWithCCpsM' WithPoked TMaybe.M mns =>
-	Q -> HPList.PL BindSparseInfo mns -> Fence.F -> IO ()
-bindSparse (Q q) is (Fence.F f) =
+	Q -> HPList.PL BindSparseInfo mns -> Maybe Fence.F -> IO ()
+bindSparse (Q q) is mf =
 	HPList.withListWithCCpsM' @_ @WithPoked @TMaybe.M is bindSparseInfoToCore \cis ->
 	let cic = length cis in
 	allocaArray cic \pcis ->
 	pokeArray pcis cis >>
-	(throwUnlessSuccess . Result =<< C.bindSparse q (fromIntegral cic) pcis f)
+	let cf = case mf of
+		Just (Fence.F f) -> f
+		Nothing -> NullHandle in
+	(throwUnlessSuccess . Result =<< C.bindSparse q (fromIntegral cic) pcis cf)
 
 data BindSparseInfo (mn :: Maybe Type) = BindSparseInfo {
 	bindSparseInfoNext :: TMaybe.M mn,
