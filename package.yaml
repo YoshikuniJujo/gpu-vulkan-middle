@@ -50,7 +50,7 @@ dependencies:
 - hetero-parameter-list < 1
 - storable-peek-poke < 1
 - storable-hetero-list < 1
-- gpu-vulkan-core < 1
+- gpu-vulkan-core >= 0.1.0.11 && < 1
 - language-spir-v < 1
 - typelevel-tools-yj < 1
 

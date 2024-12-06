@@ -197,7 +197,7 @@ library
     , containers <1
     , data-default <1
     , exception-hierarchy <1
-    , gpu-vulkan-core <1
+    , gpu-vulkan-core >=0.1.0.11 && <1
     , hetero-parameter-list <1
     , language-spir-v <1
     , mtl <3
@@ -239,7 +239,7 @@ test-suite gpu-vulkan-middle-test
     , containers <1
     , data-default <1
     , exception-hierarchy <1
-    , gpu-vulkan-core <1
+    , gpu-vulkan-core >=0.1.0.11 && <1
     , gpu-vulkan-middle
     , hetero-parameter-list <1
     , language-spir-v <1
