@@ -12,7 +12,8 @@
 
 module Gpu.Vulkan.Middle.Internal (
 	ApplicationInfo(..), applicationInfoToCore,
-	ApiVersion(..), makeApiVersion, apiVersion_1_0, apiVersion_1_1,
+	ApiVersion(..), makeApiVersion,
+	apiVersion_1_0, apiVersion_1_1, apiVersion_1_2, apiVersion_1_3,
 	LayerProperties(..), layerPropertiesFromCore,
 	ExtensionProperties(..), extensionPropertiesFromCore,
 	StencilOpState(..), stencilOpStateToCore,
@@ -89,9 +90,11 @@ deriving instance Show (TMaybe.M mn) => Show (ApplicationInfo mn)
 
 newtype ApiVersion = ApiVersion C.ApiVersion deriving (Show, Eq, Ord, Storable)
 
-apiVersion_1_0, apiVersion_1_1 :: ApiVersion
+apiVersion_1_0, apiVersion_1_1, apiVersion_1_2, apiVersion_1_3 :: ApiVersion
 apiVersion_1_0 = ApiVersion C.apiVersion_1_0
 apiVersion_1_1 = ApiVersion C.apiVersion_1_1
+apiVersion_1_2 = ApiVersion C.apiVersion_1_2
+apiVersion_1_3 = ApiVersion C.apiVersion_1_3
 
 type Variant = Word8	-- 0 <= variant < 8
 type Major = Word8	-- 0 <= major < 127
