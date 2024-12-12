@@ -61,3 +61,53 @@ instance Nextable DescriptorIndexingFeatures where
 	createNextable p n =
 		descriptorIndexingFeaturesFromNoNext n .
 		descriptorIndexingFeaturesFromCore <$> peek (castPtr p)
+
+makeStructure "Vulkan12Features"
+
+instance Peek Vulkan12FeaturesNoNext where
+	peek' = (vulkan12FeaturesFromCore <$>) . peek . castPtr
+
+instance Typeable Vulkan12FeaturesNoNext where
+	structureType = StructureTypePhysicalDeviceVulkan12Features
+
+instance Sizable Vulkan12FeaturesNoNext where
+	sizeOf' = sizeOf @C.Vulkan12Features undefined
+	alignment' = alignment @C.Vulkan12Features undefined
+
+instance WithPoked (TMaybe.M mn) => WithPoked (Vulkan12Features mn) where
+	withPoked' v12fs f = alloca \pv12fs -> do
+		vulkan12FeaturesToCore v12fs $ \cv12fs -> poke pv12fs cv12fs
+		f . ptrS $ castPtr pv12fs
+
+instance Nextable Vulkan12Features where
+	nextableSize = sizeOf @C.Vulkan12Features undefined
+	nextableType = StructureTypePhysicalDeviceVulkan12Features
+	nextPtr p = C.vulkan12FeaturesPNext <$> peek (castPtr p)
+	createNextable p n =
+		vulkan12FeaturesFromNoNext n .
+		vulkan12FeaturesFromCore <$> peek (castPtr p)
+
+makeStructure "Vulkan13Features"
+
+instance Peek Vulkan13FeaturesNoNext where
+	peek' = (vulkan13FeaturesFromCore <$>) . peek . castPtr
+
+instance Typeable Vulkan13FeaturesNoNext where
+	structureType = StructureTypePhysicalDeviceVulkan13Features
+
+instance Sizable Vulkan13FeaturesNoNext where
+	sizeOf' = sizeOf @C.Vulkan13Features undefined
+	alignment' = alignment @C.Vulkan13Features undefined
+
+instance WithPoked (TMaybe.M mn) => WithPoked (Vulkan13Features mn) where
+	withPoked' v13fs f = alloca \pv13fs -> do
+		vulkan13FeaturesToCore v13fs $ \cv13fs -> poke pv13fs cv13fs
+		f . ptrS $ castPtr pv13fs
+
+instance Nextable Vulkan13Features where
+	nextableSize = sizeOf @C.Vulkan13Features undefined
+	nextableType = StructureTypePhysicalDeviceVulkan13Features
+	nextPtr p = C.vulkan13FeaturesPNext <$> peek (castPtr p)
+	createNextable p n =
+		vulkan13FeaturesFromNoNext n .
+		vulkan13FeaturesFromCore <$> peek (castPtr p)

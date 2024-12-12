@@ -1,5 +1,5 @@
 name:                gpu-vulkan-middle
-version:             0.1.0.61
+version:             0.1.0.62
 github:              "YoshikuniJujo/gpu-vulkan-middle"
 license:             BSD3
 author:              "Yoshikuni Jujo"
@@ -12,9 +12,11 @@ extra-source-files:
 
 data-files:
 - th/vkFormat.txt
-- th/vkPhysicalDeviceDescriptorIndexingFeatures.txt
-- th/vkPhysicalDeviceFeatures.txt
 - th/vkPhysicalDeviceLimits.txt
+- th/vkPhysicalDeviceFeatures.txt
+- th/vkPhysicalDeviceVulkan12Features.txt
+- th/vkPhysicalDeviceVulkan13Features.txt
+- th/vkPhysicalDeviceDescriptorIndexingFeatures.txt
 - th/vkShaderStageFlagBits.txt
 
 # Metadata used when publishing your package

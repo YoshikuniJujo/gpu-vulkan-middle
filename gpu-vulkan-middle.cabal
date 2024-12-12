@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           gpu-vulkan-middle
-version:        0.1.0.61
+version:        0.1.0.62
 synopsis:       Medium wrapper for Vulkan API
 description:    Please see the README on GitHub at <https://github.com/YoshikuniJujo/gpu-vulkan-middle#readme>
 category:       GPU
@@ -22,9 +22,11 @@ extra-source-files:
     CHANGELOG.md
 data-files:
     th/vkFormat.txt
-    th/vkPhysicalDeviceDescriptorIndexingFeatures.txt
-    th/vkPhysicalDeviceFeatures.txt
     th/vkPhysicalDeviceLimits.txt
+    th/vkPhysicalDeviceFeatures.txt
+    th/vkPhysicalDeviceVulkan12Features.txt
+    th/vkPhysicalDeviceVulkan13Features.txt
+    th/vkPhysicalDeviceDescriptorIndexingFeatures.txt
     th/vkShaderStageFlagBits.txt
 
 source-repository head

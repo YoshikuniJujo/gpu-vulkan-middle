@@ -1,0 +1,17 @@
+VkStructureType|A sType
+void*|A pNext
+VkBool32|A robustImageAccess
+VkBool32|A inlineUniformBlock
+VkBool32|A descriptorBindingInlineUniformBlockUpdateAfterBind
+VkBool32|A pipelineCreationCacheControl
+VkBool32|A privateData
+VkBool32|A shaderDemoteToHelperInvocation
+VkBool32|A shaderTerminateInvocation
+VkBool32|A subgroupSizeControl
+VkBool32|A computeFullSubgroups
+VkBool32|A synchronization2
+VkBool32|A textureCompressionASTC_HDR
+VkBool32|A shaderZeroInitializeWorkgroupMemory
+VkBool32|A dynamicRendering
+VkBool32|A shaderIntegerDotProduct
+VkBool32|A maintenance4

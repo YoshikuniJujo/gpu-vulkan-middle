@@ -10,7 +10,10 @@ moduleName :: String
 moduleName = "Vulkan.PhysicalDevice.Struct.Core"
 
 hsName :: [String]
-hsName = ["Limits", "Features", "DescriptorIndexingFeatures"]
+hsName = [
+	"Limits",
+	"Features", "Vulkan12Features", "Vulkan13Features",
+	"DescriptorIndexingFeatures"]
 
 make :: IO ()
 make = MakeStruct.make moduleName hsName

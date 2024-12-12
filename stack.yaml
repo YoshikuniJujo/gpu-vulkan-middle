@@ -41,7 +41,9 @@ packages:
 #   commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a
 
 extra-deps:
-  - gpu-vulkan-core-0.1.0.13
+  - git: https://github.com/YoshikuniJujo/gpu-vulkan-core.git
+    commit: 02f4a8f76a6993d512b04b30e5124fce9f81bc83
+  #  - gpu-vulkan-core-0.1.0.13
   - language-spir-v-0.1.0.1
   - exception-hierarchy-0.1.0.12
   - ranged-list-0.1.2.3
