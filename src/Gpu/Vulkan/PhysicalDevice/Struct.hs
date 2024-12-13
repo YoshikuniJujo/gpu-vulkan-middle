@@ -62,6 +62,12 @@ instance Nextable DescriptorIndexingFeatures where
 		descriptorIndexingFeaturesFromNoNext n .
 		descriptorIndexingFeaturesFromCore <$> peek (castPtr p)
 
+descriptorIndexingFeaturesZero :: TMaybe.M mn -> DescriptorIndexingFeatures mn
+descriptorIndexingFeaturesZero mn = unsafePerformIO
+	$ descriptorIndexingFeaturesFromNoNext mn
+	<$> descriptorIndexingFeaturesFromCore
+	<$> C.getClearedDescriptorIndexingFeatures
+
 makeStructure "Vulkan12Features"
 
 instance Peek Vulkan12FeaturesNoNext where
@@ -87,6 +93,10 @@ instance Nextable Vulkan12Features where
 		vulkan12FeaturesFromNoNext n .
 		vulkan12FeaturesFromCore <$> peek (castPtr p)
 
+vulkan12FeaturesZero :: TMaybe.M mn -> Vulkan12Features mn
+vulkan12FeaturesZero mn = unsafePerformIO $ vulkan12FeaturesFromNoNext mn
+	<$> vulkan12FeaturesFromCore <$> C.getClearedVulkan12Features
+
 makeStructure "Vulkan13Features"
 
 instance Peek Vulkan13FeaturesNoNext where
@@ -111,3 +121,7 @@ instance Nextable Vulkan13Features where
 	createNextable p n =
 		vulkan13FeaturesFromNoNext n .
 		vulkan13FeaturesFromCore <$> peek (castPtr p)
+
+vulkan13FeaturesZero :: TMaybe.M mn -> Vulkan13Features mn
+vulkan13FeaturesZero mn = unsafePerformIO $ vulkan13FeaturesFromNoNext mn
+	<$> vulkan13FeaturesFromCore <$> C.getClearedVulkan13Features
