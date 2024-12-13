@@ -171,6 +171,12 @@ data Features2 mn = Features2 {
 
 deriving instance Show (TMaybe.M mn) => Show (Features2 mn)
 
+instance WithPoked (TMaybe.M mn) => WithPoked (Features2 mn) where
+	withPoked' (Features2 mn fs) f = alloca \pfs2 -> do
+		withPoked' mn \spn -> withPtrS spn \pn ->
+			poke pfs2 $ C.Features2 () (castPtr pn) (featuresToCore fs)
+		f . ptrS $ castPtr pfs2
+
 features2FromCore :: ReadChain mn => C.Features2 -> IO (Features2 mn)
 features2FromCore C.Features2 {
 	C.features2PNext = pnxt,
