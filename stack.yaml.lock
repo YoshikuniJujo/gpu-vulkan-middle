@@ -5,16 +5,12 @@
 
 packages:
 - completed:
-    commit: 3e0dea4a9b87ca9389e1661d56bcdc4f09ccaafd
-    git: https://github.com/YoshikuniJujo/gpu-vulkan-core.git
-    name: gpu-vulkan-core
+    hackage: gpu-vulkan-core-0.1.0.16@sha256:80b1d9dddc1f2adcfaacb03776be062ee74c028d57b4115f5f114782147aa96d,3475
     pantry-tree:
-      sha256: 9d49b89b834de06791e67aa9a3c44a5e45db6d317233f9e038e81bb30f894850
-      size: 5406
-    version: 0.1.0.16
+      sha256: f139956c7d6c7e2abd272f2ea00cff59bdde98219ba1bbc4d8b9d20e89cdc3c1
+      size: 5004
   original:
-    commit: 3e0dea4a9b87ca9389e1661d56bcdc4f09ccaafd
-    git: https://github.com/YoshikuniJujo/gpu-vulkan-core.git
+    hackage: gpu-vulkan-core-0.1.0.16
 - completed:
     hackage: language-spir-v-0.1.0.1@sha256:856ab0219ee0c2b5ae759ba7c5c8a7421bdc6a8a62f5a6bf05a9171fcfa9c8d0,1991
     pantry-tree:
@@ -29,23 +25,9 @@ packages:
       size: 299
   original:
     hackage: exception-hierarchy-0.1.0.12
-- completed:
-    hackage: ranged-list-0.1.2.3@sha256:003aae13aee986a50e3cf34f448c0d106c51f063d92d0fcd5d10043b77ff1c01,2220
-    pantry-tree:
-      sha256: 75dc8c74bdf8ac9a36ed3c093e43bac33d0c7b35ccd99750bc0a6ca30c95c1ae
-      size: 1339
-  original:
-    hackage: ranged-list-0.1.2.3
-- completed:
-    hackage: typecheck-plugin-nat-simple-0.1.0.11@sha256:d24fc47b7b60bf3499775a2bcb1ac14af83bdb02edcaa9956472a51e78c6084e,3122
-    pantry-tree:
-      sha256: 91084aa742cd2b463b1eed50dd6891310ea0ea19b8c0ba578b9cf5d7c96d3b8b
-      size: 1743
-  original:
-    hackage: typecheck-plugin-nat-simple-0.1.0.11
 snapshots:
 - completed:
-    sha256: b0933eba5b921a0e96a54fa7ea43fd0ca73288edb836d44fea32420419c02a8f
-    size: 603055
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2024/12/12.yaml
-  original: nightly-2024-12-12
+    sha256: d916c9e8ff5c95b38fb2fc5b25f2c3e35358dee76386c40fbbb27e579a36e9c6
+    size: 605818
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2024/12/13.yaml
+  original: nightly-2024-12-13
