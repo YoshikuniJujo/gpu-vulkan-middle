@@ -81,6 +81,22 @@ createFileWithDefault hf mnm icms dfhscnmdrvs ext = do
 		intercalate "\n" (map (\((a, b), c) -> makeEnumWithDefault src mnm a b c) (zip hscnmdrvs mdf)) ++
 		case ext of "" -> ""; _ -> "\n" ++ ext ++ "\n"
 
+createFileWithDefault2 ::
+	HeaderFile -> ModuleName -> [IncludeModule] ->
+	[((UseEnum, Maybe String), [(String, Const)], (HaskellName, CName, [DerivName]))] ->
+	ExtraCode -> IO ()
+createFileWithDefault2 hf mnm icms dfhscnmdrvs ext = do
+	let	(mdf_, hscnmdrvs) = unzip $ popTuple <$> dfhscnmdrvs
+		(ues, mdf) = unzip mdf_
+	prg <- getProgName
+	src <- readFile hf
+	createDirectoryIfMissing True . takeDirectory $ "../src/Gpu/Vulkan/" ++ substitute '.' '/' mnm
+	writeFile ("../src/Gpu/Vulkan/" ++ substitute '.' '/' mnm ++ ".hsc") $
+		header prg (icms ++ ["Data.Default"]) mnm ++
+		intercalate "\n" (map (\(ue, ((a, b), c)) ->
+			makeEnumWithDefault2 src mnm ue a b c) (zip ues (zip hscnmdrvs mdf))) ++
+		case ext of "" -> ""; _ -> "\n" ++ ext ++ "\n"
+
 createRaw :: HeaderFile -> [String] -> CName -> IO ()
 createRaw hf zrs cn@(c : cs) = do
 	src <- readFile hf
@@ -133,6 +149,13 @@ makeEnumWithDefault ::
 	(HaskellName, CName, [DerivName]) -> Maybe String -> HaskellCode
 makeEnumWithDefault src mnm elms hsnmcnmdrvs@(hsnm, _, _) mdf =
 	makeEnum' src mnm elms hsnmcnmdrvs ++
+	maybe "" (\df -> "\n" ++ instanceDefault hsnm df) mdf
+
+makeEnumWithDefault2 ::
+	HeaderCode -> ModuleName -> UseEnum -> [(String, Const)] ->
+	(HaskellName, CName, [DerivName]) -> Maybe String -> HaskellCode
+makeEnumWithDefault2 src mnm ue elms hsnmcnmdrvs@(hsnm, _, _) mdf =
+	makeEnum2 src mnm ue elms hsnmcnmdrvs ++
 	maybe "" (\df -> "\n" ++ instanceDefault hsnm df) mdf
 
 instanceDefault :: HaskellName -> String -> HaskellCode
