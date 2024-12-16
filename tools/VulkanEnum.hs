@@ -12,17 +12,26 @@ make :: IO ()
 make = do
 	createRaw vulkanCore ["ShaderStageFlagsZero"] "VkShaderStageFlagBits"
 	createRaw vulkanCore [] "VkFormat"
-	createFile'' vulkanCore "Enum"
-		["Foreign.Ptr", "Data.Bits", "Data.Word"] ((([] ,) <$> noZeros) ++ zeros)
+	createFile2 vulkanCore "Enum"
+		["Foreign.Ptr", "Data.Bits", "Data.Word"] useEnums
 		[nowdoc|
 type PtrDynamicState = Ptr DynamicState
 type AccessFlags = AccessFlagBits
+type AccessFlags2 = AccessFlagBits2
 type DependencyFlags = DependencyFlagBits
 type QueryControlFlags = QueryControlFlagBits
 type QueryPipelineStatisticFlags = QueryPipelineStatisticFlagBits
 type CullModeFlags = CullModeFlagBits
 type ShaderStageFlags = ShaderStageFlagBits
 type FormatFeatureFlags = FormatFeatureFlagBits|]
+
+useEnums :: [(UseEnum, ([(String, Const)], (HaskellName, CName, [DerivName])))]
+useEnums = [
+	(NotUseEnum,
+		(	[("AccessFlags2Zero", Int 0)],
+			(	"AccessFlagBits2", "VkAccessFlagBits2",
+				["Show", "Eq", "Storable", "Bits"] ) ) )
+	] ++ ((UseEnum ,) <$> (([] ,) <$> noZeros) ++ zeros)
 
 noZeros :: [(HaskellName, CName, [DerivName])]
 noZeros = [

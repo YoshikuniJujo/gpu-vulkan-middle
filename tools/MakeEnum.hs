@@ -51,6 +51,22 @@ createFile'' hf mnm icms hscnmdrvs ext = do
 		header prg icms mnm ++ intercalate "\n" (map (uncurry $ makeEnum' src mnm) hscnmdrvs) ++
 		case ext of "" -> ""; _ -> "\n" ++ ext ++ "\n"
 
+createFile2 ::
+	HeaderFile -> ModuleName -> [IncludeModule] ->
+	[(UseEnum, ([(String, Const)], (HaskellName, CName, [DerivName])))] -> ExtraCode -> IO ()
+createFile2 hf mnm icms hscnmdrvs ext = do
+	prg <- getProgName
+	src <- readFile hf
+	createDirectoryIfMissing True . takeDirectory $ "../src/Gpu/Vulkan/" ++ substitute '.' '/' mnm
+	writeFile ("../src/Gpu/Vulkan/" ++ substitute '.' '/' mnm ++ ".hsc") $
+		header prg icms mnm ++ intercalate "\n" (map (uncurry $ uncurry . makeEnum2 src mnm) hscnmdrvs) ++
+		case ext of "" -> ""; _ -> "\n" ++ ext ++ "\n"
+
+data UseEnum = UseEnum | NotUseEnum deriving Show
+
+useEnum :: a -> a -> UseEnum -> a
+useEnum u n = \case UseEnum -> u; NotUseEnum -> n
+
 createFileWithDefault ::
 	HeaderFile -> ModuleName -> [IncludeModule] ->
 	[(Maybe String, [(String, Const)], (HaskellName, CName, [DerivName]))] ->
@@ -91,6 +107,14 @@ makeEnum' :: HeaderCode -> ModuleName -> [(String, Const)] -> (HaskellName, CNam
 makeEnum' src mnm elms (hsnm, cnm, drvs) = body hsnm cnm drvs ++
 	intercalate ",\n"
 		(map (makeItem' mnm) . (elms ++) . removeDups [] . map makeVarConstPair . takeDefinition cnm
+			. removeBetaExtensions . filterOutCommentLine $ lines src ) ++
+		" ]\n"
+
+makeEnum2 :: HeaderCode -> ModuleName -> UseEnum -> [(String, Const)] -> (HaskellName, CName, [DerivName]) -> HaskellCode
+makeEnum2 src mnm un elms (hsnm, cnm, drvs) = body hsnm cnm drvs ++
+	intercalate ",\n"
+		(map (makeItem' mnm) . (elms ++) . removeDups [] . map makeVarConstPair
+			. (useEnum takeDefinition takeDefinition2 un) cnm
 			. removeBetaExtensions . filterOutCommentLine $ lines src ) ++
 		" ]\n"
 
@@ -163,8 +187,17 @@ makeEnum'' hf icds hsnm cnm elms drvs ext = do
 
 takeDefinition :: String -> [String] -> [String]
 takeDefinition nm =
-	map (head . words) . takeWhile (not . (== "} " ++ nm ++ ";")) . tail'
+	map (head . words) . takeWhile (not . (== "} " ++ nm ++ ";"))
+		. tail' ("takeDefinition " ++ nm)
 		. dropWhile (not . (("typedef enum " ++ nm ++ " {") `isPrefixOf`))
+
+takeDefinition2 :: String -> [String] -> [String]
+takeDefinition2 nm =
+	map ((!! 3) . words) . takeWhile ("static " `isPrefixOf`)
+		. tail' ("takeDefinition2 " ++ nm ++ " " ++ fstLn)
+		. dropWhile (not . (fstLn ==))
+	where
+	fstLn = "typedef VkFlags64 " ++ nm ++ ";"
 
 data Const = Int Int | Const String deriving Show
 
@@ -172,9 +205,9 @@ makeVarConstPair :: String -> (String, Const)
 makeVarConstPair cnst = (nm, Const cnst)
 	where nm = concat . map capitalize . tail $ sep '_' cnst
 
-tail' :: [a] -> [a]
-tail' [] = error "bad"
-tail' xs = tail xs
+tail' :: String -> [a] -> [a]
+tail' msg [] = error $ "tail': " ++ msg
+tail' _ (_ : xs) = xs
 
 showConst :: Const -> String
 showConst (Int n) = show n
