@@ -16,7 +16,7 @@ module Gpu.Vulkan.Memory.Middle (
 
 	-- * REQUIREMENTS AND BARRIER
 
-	Requirements(..), Barrier(..),
+	Requirements(..), Barrier(..), Barrier2(..),
 
 	-- * MEMORY TYPE
 

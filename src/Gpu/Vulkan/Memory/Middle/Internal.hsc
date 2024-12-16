@@ -17,6 +17,7 @@ module Gpu.Vulkan.Memory.Middle.Internal (
 
 	Requirements(..), requirementsFromCore,
 	Barrier(..), barrierToCore,
+	Barrier2(..), barrier2ToCore,
 
 	Heap(..), heapFromCore,
 
@@ -50,6 +51,8 @@ import qualified Gpu.Vulkan.Device.Middle.Types as Device
 
 import qualified Gpu.Vulkan.AllocationCallbacks.Middle.Internal as AllocationCallbacks
 import qualified Gpu.Vulkan.Memory.Core as C
+
+import qualified Gpu.Vulkan.Pipeline.Enum as Pipeline
 
 #include <vulkan/vulkan.h>
 
@@ -245,7 +248,8 @@ data Barrier mn = Barrier {
 
 deriving instance Show (TMaybe.M mn) => Show (Barrier mn)
 
-barrierToCore :: WithPoked (TMaybe.M mn) => Barrier mn -> (C.Barrier -> IO a) -> IO ()
+barrierToCore :: WithPoked (TMaybe.M mn) =>
+	Barrier mn -> (C.Barrier -> IO a) -> IO ()
 barrierToCore Barrier {
 	barrierNext = mnxt,
 	barrierSrcAccessMask = AccessFlagBits sam,
@@ -255,3 +259,28 @@ barrierToCore Barrier {
 		C.barrierPNext = pnxt',
 		C.barrierSrcAccessMask = sam,
 		C.barrierDstAccessMask = dam }
+
+data Barrier2 mn = Barrier2 {
+	barrier2Next :: TMaybe.M mn,
+	barrier2SrcStageMask :: Pipeline.StageFlags2,
+	barrier2SrcAccessMask :: AccessFlags2,
+	barrier2DstStageMask :: Pipeline.StageFlags2,
+	barrier2DstAccessMask :: AccessFlags2 }
+
+deriving instance Show (TMaybe.M mn) => Show (Barrier2 mn)
+
+barrier2ToCore :: WithPoked (TMaybe.M mn) =>
+	Barrier2 mn -> (C.Barrier2 -> IO a) -> IO ()
+barrier2ToCore Barrier2 {
+	barrier2Next = mnxt,
+	barrier2SrcStageMask = Pipeline.StageFlagBits2 ssm,
+	barrier2SrcAccessMask = AccessFlagBits2 sam,
+	barrier2DstStageMask = Pipeline.StageFlagBits2 dsm,
+	barrier2DstAccessMask = AccessFlagBits2 dam } f  =
+	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') -> f C.Barrier2 {
+		C.barrier2SType = (),
+		C.barrier2PNext = pnxt',
+		C.barrier2SrcStageMask = ssm,
+		C.barrier2SrcAccessMask = sam,
+		C.barrier2DstStageMask = dsm,
+		C.barrier2DstAccessMask = dam }
