@@ -26,6 +26,7 @@ module Gpu.Vulkan.Image.Middle.Internal (
 	-- * MEMORY BARRIER
 
 	MemoryBarrier(..), memoryBarrierToCore,
+	MemoryBarrier2(..), memoryBarrier2ToCore,
 	SubresourceRange(..), subresourceRangeToCore,
 
 	-- * BLIT
@@ -69,6 +70,8 @@ import qualified Gpu.Vulkan.Memory.Middle.Internal as Memory
 import qualified Gpu.Vulkan.Image.Core as C
 import qualified Gpu.Vulkan.Sample.Enum as Sample
 import qualified Gpu.Vulkan.QueueFamily.EnumManual as QueueFamily
+
+import qualified Gpu.Vulkan.Pipeline.Enum as Pipeline
 
 data SubresourceRange = SubresourceRange {
 	subresourceRangeAspectMask :: AspectFlags,
@@ -291,6 +294,48 @@ memoryBarrierToCore MemoryBarrier {
 		C.memoryBarrierDstQueueFamilyIndex = dqfi,
 		C.memoryBarrierImage = img,
 		C.memoryBarrierSubresourceRange = subresourceRangeToCore srr }
+
+data MemoryBarrier2 mn = MemoryBarrier2 {
+	memoryBarrier2Next :: TMaybe.M mn,
+	memoryBarrier2SrcStageMask :: Pipeline.StageFlags2,
+	memoryBarrier2SrcAccessMask :: AccessFlags2,
+	memoryBarrier2DstStageMask :: Pipeline.StageFlags2,
+	memoryBarrier2DstAccessMask :: AccessFlags2,
+	memoryBarrier2OldLayout :: Layout, memoryBarrier2NewLayout :: Layout,
+	memoryBarrier2SrcQueueFamilyIndex :: QueueFamily.Index,
+	memoryBarrier2DstQueueFamilyIndex :: QueueFamily.Index,
+	memoryBarrier2Image :: I,
+	memoryBarrier2SubresourceRange :: SubresourceRange }
+
+memoryBarrier2ToCore :: WithPoked (TMaybe.M mn) =>
+	MemoryBarrier2 mn -> (C.MemoryBarrier2 -> IO a) -> IO ()
+memoryBarrier2ToCore MemoryBarrier2 {
+	memoryBarrier2Next = mnxt,
+	memoryBarrier2SrcStageMask = Pipeline.StageFlagBits2 ssm,
+	memoryBarrier2SrcAccessMask = AccessFlagBits2 sam,
+	memoryBarrier2DstStageMask = Pipeline.StageFlagBits2 dsm,
+	memoryBarrier2DstAccessMask = AccessFlagBits2 dam,
+	memoryBarrier2OldLayout = Layout ol,
+	memoryBarrier2NewLayout = Layout nl,
+	memoryBarrier2SrcQueueFamilyIndex = QueueFamily.Index sqfi,
+	memoryBarrier2DstQueueFamilyIndex = QueueFamily.Index dqfi,
+	memoryBarrier2Image = I rimg,
+	memoryBarrier2SubresourceRange = srr } f =
+	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
+	readIORef rimg >>= \(_, img) ->
+	f C.MemoryBarrier2 {
+		C.memoryBarrier2SType = (),
+		C.memoryBarrier2PNext = pnxt',
+		C.memoryBarrier2SrcStageMask = ssm,
+		C.memoryBarrier2SrcAccessMask = sam,
+		C.memoryBarrier2DstStageMask = dsm,
+		C.memoryBarrier2DstAccessMask = dam,
+		C.memoryBarrier2OldLayout = ol,
+		C.memoryBarrier2NewLayout = nl,
+		C.memoryBarrier2SrcQueueFamilyIndex = sqfi,
+		C.memoryBarrier2DstQueueFamilyIndex = dqfi,
+		C.memoryBarrier2Image = img,
+		C.memoryBarrier2SubresourceRange = subresourceRangeToCore srr }
 
 data SubresourceLayers = SubresourceLayers {
 	subresourceLayersAspectMask :: AspectFlags,

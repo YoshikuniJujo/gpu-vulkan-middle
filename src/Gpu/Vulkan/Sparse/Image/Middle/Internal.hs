@@ -5,9 +5,7 @@
 
 module Gpu.Vulkan.Sparse.Image.Middle.Internal where
 
-import Foreign.Ptr
 import Foreign.Marshal.Array
-import Foreign.Storable.PeekPoke
 import Control.Arrow
 import Data.IORef
 
