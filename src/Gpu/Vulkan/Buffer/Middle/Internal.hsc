@@ -1,6 +1,7 @@
 {-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE BlockArguments #-}
 {-# LANGUAGE MonoLocalBinds #-}
+{-# LANGUAGE DataKinds #-}
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE FlexibleContexts, UndecidableInstances #-}
 {-# LANGUAGE PatternSynonyms, ViewPatterns #-}
@@ -13,6 +14,7 @@ module Gpu.Vulkan.Buffer.Middle.Internal (
 
 	ImageCopy(..), imageCopyToCore,
 	MemoryBarrier(..), memoryBarrierToCore',
+	MemoryBarrier2(..), memoryBarrier2ToCore,
 
 	C.Copy, pattern C.Copy, C.copySrcOffset, C.copyDstOffset, C.copySize
 	) where
@@ -44,6 +46,8 @@ import qualified Gpu.Vulkan.Buffer.Core as C
 import qualified Gpu.Vulkan.Memory.Middle.Internal as Memory
 import qualified Gpu.Vulkan.QueueFamily.EnumManual as QueueFamily
 import qualified Gpu.Vulkan.Image.Middle.Internal as Image
+
+import qualified Gpu.Vulkan.Pipeline.Enum as Pipeline
 
 #include <vulkan/vulkan.h>
 
@@ -116,7 +120,7 @@ data MemoryBarrier mn = MemoryBarrier {
 	memoryBarrierOffset :: Device.Size,
 	memoryBarrierSize :: Device.Size }
 
-deriving instance Show (TMaybe.M mn) => Show (MemoryBarrier mn)
+deriving instance Show (TMaybe.M mn) => Show (MemoryBarrier2 mn)
 
 memoryBarrierToCore' :: WithPoked (TMaybe.M mn) =>
 	MemoryBarrier mn -> (C.MemoryBarrier -> IO a) -> IO ()
@@ -140,6 +144,47 @@ memoryBarrierToCore' MemoryBarrier {
 		C.memoryBarrierBuffer = b,
 		C.memoryBarrierOffset = ofst,
 		C.memoryBarrierSize = sz }
+
+data MemoryBarrier2 mn = MemoryBarrier2 {
+	memoryBarrier2Next :: TMaybe.M mn,
+	memoryBarrier2SrcStageMask :: Pipeline.StageFlags2,
+	memoryBarrier2SrcAccessMask :: AccessFlags2,
+	memoryBarrier2DstStageMask :: Pipeline.StageFlags2,
+	memoryBarrier2DstAccessMask :: AccessFlags2,
+	memoryBarrier2SrcQueueFamilyIndex :: QueueFamily.Index,
+	memoryBarrier2DstQueueFamilyIndex :: QueueFamily.Index,
+	memoryBarrier2Buffer :: B,
+	memoryBarrier2Offset :: Device.Size,
+	memoryBarrier2Size :: Device.Size }
+
+deriving instance Show (TMaybe.M mn) => Show (MemoryBarrier mn)
+
+memoryBarrier2ToCore :: WithPoked (TMaybe.M mn) =>
+	MemoryBarrier2 mn -> (C.MemoryBarrier2 -> IO a) -> IO ()
+memoryBarrier2ToCore MemoryBarrier2 {
+	memoryBarrier2Next = mnxt,
+	memoryBarrier2SrcStageMask = Pipeline.StageFlagBits2 ssm,
+	memoryBarrier2SrcAccessMask = AccessFlagBits2 sam,
+	memoryBarrier2DstStageMask = Pipeline.StageFlagBits2 dsm,
+	memoryBarrier2DstAccessMask = AccessFlagBits2 dam,
+	memoryBarrier2SrcQueueFamilyIndex = QueueFamily.Index sqfi,
+	memoryBarrier2DstQueueFamilyIndex = QueueFamily.Index dqfi,
+	memoryBarrier2Buffer = B b,
+	memoryBarrier2Offset = Device.Size ofst,
+	memoryBarrier2Size = Device.Size sz } f =
+	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
+	f C.MemoryBarrier2 {
+		C.memoryBarrier2SType = (),
+		C.memoryBarrier2PNext = pnxt',
+		C.memoryBarrier2SrcStageMask = ssm,
+		C.memoryBarrier2SrcAccessMask = sam,
+		C.memoryBarrier2DstStageMask = dsm,
+		C.memoryBarrier2DstAccessMask = dam,
+		C.memoryBarrier2SrcQueueFamilyIndex = sqfi,
+		C.memoryBarrier2DstQueueFamilyIndex = dqfi,
+		C.memoryBarrier2Buffer = b,
+		C.memoryBarrier2Offset = ofst,
+		C.memoryBarrier2Size = sz }
 
 data ImageCopy = ImageCopy {
 	imageCopyBufferOffset :: Device.Size,

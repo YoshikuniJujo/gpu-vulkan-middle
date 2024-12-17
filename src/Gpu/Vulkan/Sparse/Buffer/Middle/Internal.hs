@@ -5,9 +5,7 @@
 
 module Gpu.Vulkan.Sparse.Buffer.Middle.Internal where
 
-import Foreign.Ptr
 import Foreign.Marshal.Array
-import Foreign.Storable.PeekPoke
 import Control.Arrow
 
 import Gpu.Vulkan.Buffer.Middle.Internal qualified as Buffer

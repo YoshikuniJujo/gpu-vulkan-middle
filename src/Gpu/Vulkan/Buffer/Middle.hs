@@ -18,6 +18,6 @@ module Gpu.Vulkan.Buffer.Middle (
 
 	-- * MEMORY BARRIER
 
-	MemoryBarrier(..) ) where
+	MemoryBarrier(..), MemoryBarrier2(..) ) where
 
 import Gpu.Vulkan.Buffer.Middle.Internal
