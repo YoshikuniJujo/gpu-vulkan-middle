@@ -42,7 +42,9 @@ module Gpu.Vulkan.Middle.Internal (
 	C.viewportX, C.viewportY, C.viewportWidth, C.viewportHeight,
 	C.viewportMinDepth, C.viewportMaxDepth,
 
-	Size(..)
+	Size(..),
+
+	DependencyInfo(..), dependencyInfoToCore
 
 	) where
 
@@ -54,9 +56,11 @@ import Foreign.Storable
 import Foreign.Storable.PeekPoke
 import Control.Arrow
 import Control.Monad
+import Data.Kind
 import Data.Default
 import Data.TypeLevel.Maybe qualified as TMaybe
 import Data.TypeLevel.List qualified as TL
+import Data.HeteroParList qualified as HPList
 import Data.HeteroParList qualified as HeteroParList
 import Data.HeteroParList (pattern (:**))
 import Data.Word
@@ -75,6 +79,10 @@ import {-# SOURCE #-} qualified
 	Gpu.Vulkan.CommandBuffer.Middle.Internal as CommandBuffer
 
 import Gpu.Vulkan.Middle.Types
+
+import qualified Gpu.Vulkan.Memory.Middle.Internal as Memory
+import {-# SOURCE #-} qualified Gpu.Vulkan.Buffer.Middle.Internal as Buffer
+import qualified Gpu.Vulkan.Image.Middle.Internal as Image
 
 #include <vulkan/vulkan.h>
 
@@ -349,3 +357,49 @@ formatPropertiesFromCore C.FormatProperties {
 		formatPropertiesOptimalTilingFeatures =
 			FormatFeatureFlagBits otfs,
 		formatPropertiesBufferFeatures = FormatFeatureFlagBits bfs }
+
+data DependencyInfo mn mbs bmbs imbs = DependencyInfo {
+	dependencyInfoNext :: TMaybe.M mn,
+	dependencyInfoDependencyFlags :: DependencyFlags,
+	dependencyInfoMemoryBarriers :: HPList.PL Memory.Barrier2 mbs,
+	dependencyInfoBufferMemoryBarriers ::
+		HPList.PL Buffer.MemoryBarrier2 bmbs,
+	dependencyInfoImageMemoryBarriers ::
+		HPList.PL Image.MemoryBarrier2 imbs }
+
+dependencyInfoToCore :: forall mn (mbs :: [Maybe Type]) bmbs imbs a . (
+	WithPoked (TMaybe.M mn),
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M mbs, TL.Length mbs,
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M bmbs, TL.Length bmbs,
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M imbs, TL.Length imbs ) =>
+	DependencyInfo mn mbs bmbs imbs -> (C.DependencyInfo -> IO a) -> IO ()
+dependencyInfoToCore DependencyInfo {
+	dependencyInfoNext = mnxt,
+	dependencyInfoDependencyFlags = DependencyFlagBits fs,
+	dependencyInfoMemoryBarriers = mbs,
+	dependencyInfoBufferMemoryBarriers = bmbs,
+	dependencyInfoImageMemoryBarriers = imbs } f =
+	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
+	allocaArray mbc \pmbs ->
+	allocaArray bmbc \pbmbs -> allocaArray imbc \pimbs -> do
+	HPList.withListWithCCpsM' @_ @WithPoked @TMaybe.M
+		mbs Memory.barrier2ToCore \cmbs -> pokeArray pmbs cmbs
+	HPList.withListWithCCpsM' @_ @WithPoked @TMaybe.M
+		bmbs Buffer.memoryBarrier2ToCore \cbmbs -> pokeArray pbmbs cbmbs
+	HPList.withListWithCCpsM' @_ @WithPoked @TMaybe.M
+		imbs Image.memoryBarrier2ToCore \cimbs -> pokeArray pimbs cimbs
+	f C.DependencyInfo {
+		C.dependencyInfoSType = (),
+		C.dependencyInfoPNext = pnxt',
+		C.dependencyInfoDependencyFlags = fs,
+		C.dependencyInfoMemoryBarrierCount = mbc,
+		C.dependencyInfoPMemoryBarriers = pmbs,
+		C.dependencyInfoBufferMemoryBarrierCount = bmbc,
+		C.dependencyInfoPBufferMemoryBarriers = pbmbs,
+		C.dependencyInfoImageMemoryBarrierCount = imbc,
+		C.dependencyInfoPImageMemoryBarriers = pimbs }
+	where
+	mbc, bmbc, imbc :: Integral n => n
+	mbc = TL.length @_ @mbs
+	bmbc = TL.length @_ @bmbs
+	imbc = TL.length @_ @imbs

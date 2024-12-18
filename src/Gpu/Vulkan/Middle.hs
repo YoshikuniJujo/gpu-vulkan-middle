@@ -67,7 +67,9 @@ module Gpu.Vulkan.Middle (
 
 	-- * OTHERS
 
-	Size(..)
+	Size(..),
+
+	DependencyInfo(..)
 
 	) where
 
