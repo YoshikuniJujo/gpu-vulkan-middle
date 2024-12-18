@@ -34,7 +34,7 @@ module Gpu.Vulkan.Cmd.Middle (
 
 	-- * MEMORY DEPENDENCY
 
-	pipelineBarrier,
+	pipelineBarrier, pipelineBarrier2,
 
 	-- * QUERY
 
@@ -44,6 +44,7 @@ module Gpu.Vulkan.Cmd.Middle (
 
 import Foreign.Marshal.Alloc
 import Foreign.Marshal.Array
+import Foreign.Storable
 import Foreign.Storable.PeekPoke (WithPoked)
 import Foreign.Storable.HeteroList
 import Control.Arrow
@@ -51,6 +52,8 @@ import Control.Monad
 import Control.Monad.Trans
 import Control.Monad.Cont
 import Data.TypeLevel.Maybe qualified as TMaybe
+import Data.TypeLevel.List qualified as TList
+import Data.HeteroParList qualified as HPList
 import Data.HeteroParList qualified as HeteroParList
 import Data.Word
 import Data.Int
@@ -219,6 +222,18 @@ pipelineBarrier (CommandBuffer.M.C _ cb)
 
 		C.pipelineBarrier cb ssm dsm dfs (fromIntegral mbc) pmbs
 			(fromIntegral bbc) pbbs (fromIntegral ibc) pibs
+
+pipelineBarrier2 :: (
+	WithPoked (TMaybe.M mn),
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M mbas, TList.Length mbas,
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M bmbas, TList.Length bmbas,
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M imbas, TList.Length imbas
+	) =>
+	CommandBuffer.M.C -> DependencyInfo mn mbas bmbas imbas -> IO ()
+pipelineBarrier2 (CommandBuffer.M.C _ cb) di =
+	dependencyInfoToCore di \cdi -> alloca \pdi -> do
+		poke pdi cdi
+		C.pipelineBarrier2 cb pdi
 
 blitImage :: CommandBuffer.M.C ->
 	Image.I -> Image.Layout -> Image.I -> Image.Layout ->
