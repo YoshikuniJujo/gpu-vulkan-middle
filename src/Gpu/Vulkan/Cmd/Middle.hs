@@ -32,6 +32,10 @@ module Gpu.Vulkan.Cmd.Middle (
 
 	copyBuffer, copyBufferToImage, copyImageToBuffer, blitImage,
 
+	-- * CLEAR COLOR IMAGE
+
+	clearColorImage,
+
 	-- * MEMORY DEPENDENCY
 
 	pipelineBarrier, pipelineBarrier2,
@@ -53,6 +57,7 @@ import Control.Monad.Trans
 import Control.Monad.Cont
 import Data.TypeLevel.Maybe qualified as TMaybe
 import Data.TypeLevel.List qualified as TList
+import Data.List qualified as L
 import Data.HeteroParList qualified as HPList
 import Data.HeteroParList qualified as HeteroParList
 import Data.Word
@@ -264,3 +269,14 @@ writeTimestamp :: CommandBuffer.M.C -> Pipeline.StageFlagBits ->
 writeTimestamp
 	(CommandBuffer.M.C _ c) (Pipeline.StageFlagBits fls) (QueryPool.Q q) i =
 	C.writeTimestamp c fls q i
+
+clearColorImage :: ClearColorValueToCore cct =>
+	CommandBuffer.M.C -> Image.I -> Image.Layout ->
+	ClearValue ('ClearTypeColor cct) -> [Image.SubresourceRange] -> IO ()
+clearColorImage
+	(CommandBuffer.M.C _ cb) (Image.I rimg) (Image.Layout lyt) cv srrs =
+	readIORef rimg >>= \(_, img) ->
+	clearColorValueToCore cv \ccv ->
+	allocaArray (length srrs) \psrrs ->
+	pokeArray psrrs (Image.subresourceRangeToCore <$> srrs) >>
+	C.clearColorImage cb img lyt ccv (L.genericLength srrs) psrrs
