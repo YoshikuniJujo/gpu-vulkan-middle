@@ -3290,6 +3290,12 @@ enum "Format" ''#{type VkFormat}
 	("FormatR16g16S105Nv", #{const VK_FORMAT_R16G16_S10_5_NV}),
 	("FormatMaxEnum", #{const VK_FORMAT_MAX_ENUM}) ]
 
+enum "SubmitFlagBits" ''#{type VkSubmitFlagBits}
+		[''Show, ''Eq, ''Storable] [
+	("SubmitProtectedBit", #{const VK_SUBMIT_PROTECTED_BIT}),
+	("SubmitProtectedBitKhr", #{const VK_SUBMIT_PROTECTED_BIT_KHR}),
+	("SubmitFlagBitsMaxEnum", #{const VK_SUBMIT_FLAG_BITS_MAX_ENUM}) ]
+
 enum "AccessFlagBits" ''#{type VkAccessFlagBits}
 		[''Show, ''Eq, ''Storable, ''Bits] [
 	("AccessFlagsZero", 0),
@@ -3555,3 +3561,4 @@ type QueryPipelineStatisticFlags = QueryPipelineStatisticFlagBits
 type CullModeFlags = CullModeFlagBits
 type ShaderStageFlags = ShaderStageFlagBits
 type FormatFeatureFlags = FormatFeatureFlagBits
+type SubmitFlags = SubmitFlagBits
