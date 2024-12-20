@@ -14,6 +14,10 @@ module Gpu.Vulkan.Semaphore.Middle.Internal (
 
 	create, destroy, S(..), CreateInfo(..), CreateFlags,
 
+	-- * SUBMIT INFO
+
+	SubmitInfo(..), submitInfoToCore
+
 	) where
 
 import Foreign.Ptr
@@ -34,6 +38,7 @@ import qualified Gpu.Vulkan.AllocationCallbacks.Middle.Internal as AllocationCal
 import qualified Gpu.Vulkan.Semaphore.Core as C
 
 import qualified Gpu.Vulkan.Device.Middle.Types as Device
+import qualified Gpu.Vulkan.Pipeline.Enum as Pipeline
 
 #include <vulkan/vulkan.h>
 
@@ -72,3 +77,24 @@ create (Device.D dvc) ci mac = S <$> alloca \ps -> do
 destroy :: Device.D -> S -> TPMaybe.M AllocationCallbacks.A md -> IO ()
 destroy (Device.D dvc) (S s) mac =
 	AllocationCallbacks.mToCore mac $ C.destroy dvc s
+
+data SubmitInfo mn = SubmitInfo {
+	submitInfoNext :: TMaybe.M mn,
+	submitInfoSemaphore :: S,
+	submitInfoValue :: Word64,
+	submitInfoStageMask :: Pipeline.StageFlags2,
+	submitInfoDeviceIndex :: Word32 }
+
+submitInfoToCore :: WithPoked (TMaybe.M mn) =>
+	SubmitInfo mn -> (C.SubmitInfo -> IO r) -> IO ()
+submitInfoToCore SubmitInfo {
+	submitInfoNext = mnxt,
+	submitInfoSemaphore = S s, submitInfoValue = v,
+	submitInfoStageMask = Pipeline.StageFlagBits2 sm,
+	submitInfoDeviceIndex = di
+	} f =
+	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
+	f C.SubmitInfo {
+		C.submitInfoSType = (), C.submitInfoPNext = pnxt',
+		C.submitInfoSemaphore = s, C.submitInfoValue = v,
+		C.submitInfoStageMask = sm, C.submitInfoDeviceIndex = di }
