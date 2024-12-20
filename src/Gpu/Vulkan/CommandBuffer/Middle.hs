@@ -10,6 +10,10 @@ module Gpu.Vulkan.CommandBuffer.Middle (
 
 	begin, end, reset, BeginInfo(..), InheritanceInfo(..),
 
+	-- * SUBMIT INFO
+
+	SubmitInfo(..)
+
 	) where
 
 import Gpu.Vulkan.CommandBuffer.Middle.Internal

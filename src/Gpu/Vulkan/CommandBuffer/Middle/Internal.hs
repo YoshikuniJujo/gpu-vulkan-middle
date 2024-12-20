@@ -10,10 +10,14 @@
 {-# OPTIONS_GHC -Wall -fno-warn-tabs #-}
 
 module Gpu.Vulkan.CommandBuffer.Middle.Internal (
+
 	C(..),
 	AllocateInfo(..), allocateCs, freeCs,
 
-	BeginInfo(..), InheritanceInfo(..), begin, end, reset
+	BeginInfo(..), InheritanceInfo(..), begin, end, reset,
+
+	SubmitInfo(..), submitInfoToCore
+
 	) where
 
 import Foreign.Ptr
@@ -151,3 +155,18 @@ freeCs (Device.D dvc) (CommandPool.C cp)
 	(length &&& ((\(C _ cb) -> cb) <$>) -> (cc, cs)) = allocaArray cc \pcs -> do
 		pokeArray pcs cs
 		C.freeCs dvc cp (fromIntegral cc) pcs
+
+data SubmitInfo mn = SubmitInfo {
+	submitInfoNext :: TMaybe.M mn,
+	submitInfoCommandBuffer :: C,
+	submitInfoDeviceMask :: Word32 }
+
+submitInfoToCore :: WithPoked (TMaybe.M mn) =>
+	SubmitInfo mn -> (C.SubmitInfo -> IO r) -> IO ()
+submitInfoToCore SubmitInfo {
+	submitInfoNext = mnxt,
+	submitInfoCommandBuffer = C _ c, submitInfoDeviceMask = dm } f =
+	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
+	f C.SubmitInfo {
+		C.submitInfoSType = (), C.submitInfoPNext = pnxt',
+		C.submitInfoCommandBuffer = c, C.submitInfoDeviceMask = dm }
