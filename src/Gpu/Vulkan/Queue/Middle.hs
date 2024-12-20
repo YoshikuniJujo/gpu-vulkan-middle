@@ -4,7 +4,7 @@ module Gpu.Vulkan.Queue.Middle (
 
 	-- * SUBMIT AND WAIT IDLE
 
-	submit, waitIdle, Q,
+	submit, submit2, waitIdle, Q,
 
 	-- * SPARSE RESOURCES
 

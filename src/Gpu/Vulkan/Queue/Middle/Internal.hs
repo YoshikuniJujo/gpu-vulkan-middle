@@ -13,7 +13,7 @@ module Gpu.Vulkan.Queue.Middle.Internal (
 
 	-- * SUBMIT AND WAIT IDLE
 
-	submit, waitIdle, Q(..),
+	submit, submit2, waitIdle, Q(..),
 
 	-- * SPARSE RESOURCES
 
@@ -26,6 +26,7 @@ import Foreign.Marshal.Array
 import Foreign.Storable.PeekPoke
 import Control.Arrow
 import Control.Monad.Cont.MiscYj
+import Data.TypeLevel.Tuple.Uncurry
 import Data.HeteroParList qualified as HeteroParList
 
 import Gpu.Vulkan.Base.Middle
@@ -56,6 +57,16 @@ submit (Q q) sis mf = submitInfoListToCore sis \csis ->
 		r <- C.submit q (fromIntegral sic) psis
 			$ Fence.M.maybeFToCore mf
 		throwUnlessSuccess $ Result r
+
+submit2 :: SubmitInfo2ListToCore sias =>
+	Q -> HeteroParList.PL (U4 SubmitInfo2) sias -> Maybe Fence.M.F -> IO ()
+submit2 (Q q) sis mf =
+	submitInfo2ListToCore sis \csis -> let sic = length csis in
+	allocaArray sic \psis -> do
+	pokeArray psis csis
+	r <- C.submit2 q (fromIntegral sic) psis
+		$ Fence.M.maybeFToCore mf
+	throwUnlessSuccess $ Result r
 
 waitIdle :: Q -> IO ()
 waitIdle (Q q) = throwUnlessSuccess . Result =<< C.waitIdle q
