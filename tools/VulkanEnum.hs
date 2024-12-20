@@ -56,7 +56,7 @@ noZeros = [
 	("Filter", "VkFilter", ["Show", "Eq", "Storable"]),
 	("BorderColor", "VkBorderColor", ["Show", "Eq", "Storable"]),
 	("Format", "VkFormat", ["Show", "Eq", "Storable"]),
-	("SubmitFlagBits", "VkSubmitFlagBits", ["Show", "Eq", "Storable"])
+	("SubmitFlagBits", "VkSubmitFlagBits", ["Show", "Eq", "Storable", "Bits"])
 	]
 
 zeros :: [([(String, Const)], (HaskellName, CName, [DerivName]))]
