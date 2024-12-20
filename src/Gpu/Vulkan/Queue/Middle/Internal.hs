@@ -29,7 +29,7 @@ import Control.Monad.Cont.MiscYj
 import Data.HeteroParList qualified as HeteroParList
 
 import Gpu.Vulkan.Base.Middle
-import Gpu.Vulkan.Middle
+import Gpu.Vulkan.Middle.Internal
 import Gpu.Vulkan.Exception.Middle.Internal
 import Gpu.Vulkan.Exception.Enum
 import Gpu.Vulkan.Fence.Middle.Internal qualified as Fence.M

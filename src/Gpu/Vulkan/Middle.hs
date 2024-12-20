@@ -13,7 +13,8 @@ module Gpu.Vulkan.Middle (
 
 	-- ** SubmitInfo
 
-	SubmitInfo(..), SubmitInfoListToCore(..),
+	SubmitInfo(..), SubmitInfoListToCore,
+	SubmitInfo2(..), SubmitInfo2ListToCore,
 
 	-- * PROPERTIES
 

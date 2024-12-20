@@ -5,7 +5,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE KindSignatures, TypeOperators #-}
 {-# LANGUAGE AllowAmbiguousTypes #-}
-{-# LANGUAGE FlexibleContexts, UndecidableInstances #-}
+{-# LANGUAGE FlexibleContexts, FlexibleInstances, UndecidableInstances #-}
 {-# LANGUAGE PatternSynonyms, ViewPatterns #-}
 {-# LANGUAGE StandaloneDeriving, GeneralizedNewtypeDeriving #-}
 {-# OPTIONS_GHC -Wall -fno-warn-tabs #-}
@@ -25,7 +25,8 @@ module Gpu.Vulkan.Middle.Internal (
 	C.ClearDepthStencilValue, pattern C.ClearDepthStencilValue,
 	C.clearDepthStencilValueDepth, C.clearDepthStencilValueStencil,
 
-	SubmitInfo(..), SubmitInfoListToCore(..), submitInfoToCore,
+	SubmitInfo(..), SubmitInfoListToCore(..),
+	SubmitInfo2(..), SubmitInfo2ListToCore(..),
 
 	FormatProperties(..), formatPropertiesFromCore,
 
@@ -58,6 +59,7 @@ import Control.Arrow
 import Control.Monad
 import Data.Kind
 import Data.Default
+import Data.TypeLevel.Tuple.Uncurry
 import Data.TypeLevel.Maybe qualified as TMaybe
 import Data.TypeLevel.List qualified as TL
 import Data.HeteroParList qualified as HPList
@@ -339,6 +341,71 @@ submitInfoToCore SubmitInfo {
 		C.submitInfoPCommandBuffers = pcbs,
 		C.submitInfoSignalSemaphoreCount = fromIntegral ssc,
 		C.submitInfoPSignalSemaphores = psss }
+
+data SubmitInfo2 mn wsas cbas ssas = SubmitInfo2 {
+	submitInfo2Next :: TMaybe.M mn,
+	submitInfo2Flags :: SubmitFlags,
+	submitInfo2WaitSemaphoreInfos :: HPList.PL Semaphore.SubmitInfo wsas,
+	submitInfo2CommandBufferInfos ::
+		HPList.PL CommandBuffer.SubmitInfo cbas,
+	submitInfo2SignalSemaphoreInfos :: HPList.PL Semaphore.SubmitInfo ssas }
+
+class SubmitInfo2ListToCore si2as where
+	submitInfo2ListToCore ::
+		HeteroParList.PL (U4 SubmitInfo2) si2as ->
+		([C.SubmitInfo2] -> IO a) -> IO ()
+
+instance SubmitInfo2ListToCore '[] where
+	submitInfo2ListToCore HPList.Nil f = void $ f []
+
+instance (
+	WithPoked (TMaybe.M mn),
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M wsas, TL.Length wsas,
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M cbas, TL.Length cbas,
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M ssas, TL.Length ssas,
+	SubmitInfo2ListToCore si2as ) =>
+	SubmitInfo2ListToCore ('(mn, wsas, cbas, ssas) ': si2as) where
+	submitInfo2ListToCore (U4 si :** sis) f =
+		submitInfo2ToCore si \csi ->
+		submitInfo2ListToCore sis \csis -> f $ csi : csis
+
+submitInfo2ToCore :: forall mn wsas cbas ssas r . (
+	WithPoked (TMaybe.M mn),
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M wsas, TL.Length wsas,
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M cbas, TL.Length cbas,
+	HPList.ToListWithCCpsM' WithPoked TMaybe.M ssas, TL.Length ssas
+	) =>
+	SubmitInfo2 mn wsas cbas ssas -> (C.SubmitInfo2 -> IO r) -> IO ()
+submitInfo2ToCore SubmitInfo2 {
+	submitInfo2Next = mnxt,
+	submitInfo2Flags = SubmitFlagBits fs,
+	submitInfo2WaitSemaphoreInfos = wss,
+	submitInfo2CommandBufferInfos = cbs,
+	submitInfo2SignalSemaphoreInfos = sss } f =
+	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
+	allocaArray wsc \pwss -> allocaArray cbc \pcbs ->
+	allocaArray ssc \psss -> do
+	HPList.withListWithCCpsM' @_ @WithPoked @TMaybe.M
+		wss Semaphore.submitInfoToCore \cwss -> pokeArray pwss cwss
+	HPList.withListWithCCpsM' @_ @WithPoked @TMaybe.M
+		cbs CommandBuffer.submitInfoToCore \ccbs -> pokeArray pcbs ccbs
+	HPList.withListWithCCpsM' @_ @WithPoked @TMaybe.M
+		sss Semaphore.submitInfoToCore \csss -> pokeArray psss csss
+	f C.SubmitInfo2 {
+		C.submitInfo2SType = (),
+		C.submitInfo2PNext = pnxt',
+		C.submitInfo2Flags = fs,
+		C.submitInfo2WaitSemaphoreInfoCount = wsc,
+		C.submitInfo2PWaitSemaphoreInfos = pwss,
+		C.submitInfo2CommandBufferInfoCount = cbc,
+		C.submitInfo2PCommandBufferInfos = pcbs,
+		C.submitInfo2SignalSemaphoreInfoCount = ssc,
+		C.submitInfo2PSignalSemaphoreInfos = psss }
+	where
+	wsc, cbc, ssc :: Integral n => n
+	wsc = TL.length @_ @wsas
+	cbc = TL.length @_ @cbas
+	ssc = TL.length @_ @ssas
 
 data FormatProperties = FormatProperties {
 	formatPropertiesLinearTilingFeatures :: FormatFeatureFlags,
