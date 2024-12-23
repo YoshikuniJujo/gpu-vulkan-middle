@@ -58,6 +58,7 @@ import Foreign.Storable.PeekPoke
 import Control.Arrow
 import Control.Monad
 import Data.Kind
+import Data.Bits
 import Data.Default
 import Data.TypeLevel.Tuple.Uncurry
 import Data.TypeLevel.Maybe qualified as TMaybe
@@ -98,7 +99,8 @@ data ApplicationInfo mn = ApplicationInfo {
 
 deriving instance Show (TMaybe.M mn) => Show (ApplicationInfo mn)
 
-newtype ApiVersion = ApiVersion C.ApiVersion deriving (Show, Eq, Ord, Storable)
+newtype ApiVersion = ApiVersion C.ApiVersion
+	deriving (Show, Eq, Ord, Storable, Bits)
 
 apiVersion_1_0, apiVersion_1_1, apiVersion_1_2, apiVersion_1_3 :: ApiVersion
 apiVersion_1_0 = ApiVersion C.apiVersion_1_0
