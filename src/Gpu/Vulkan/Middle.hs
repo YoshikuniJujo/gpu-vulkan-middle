@@ -8,7 +8,8 @@ module Gpu.Vulkan.Middle (
 	-- ** ApplicationInfo
 
 	ApplicationInfo(..),
-	ApiVersion, makeApiVersion, Variant, Major, Minor, Patch,
+	ApiVersion,
+	makeApiVersion, fromApiVersion, Variant, Major, Minor, Patch,
 	apiVersion_1_0, apiVersion_1_1, apiVersion_1_2, apiVersion_1_3,
 
 	-- ** SubmitInfo

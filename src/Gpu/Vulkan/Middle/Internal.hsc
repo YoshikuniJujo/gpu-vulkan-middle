@@ -12,7 +12,8 @@
 
 module Gpu.Vulkan.Middle.Internal (
 	ApplicationInfo(..), applicationInfoToCore,
-	ApiVersion(..), makeApiVersion, Variant, Major, Minor, Patch,
+	ApiVersion(..),
+	makeApiVersion, fromApiVersion, Variant, Major, Minor, Patch,
 	apiVersion_1_0, apiVersion_1_1, apiVersion_1_2, apiVersion_1_3,
 	LayerProperties(..), layerPropertiesFromCore,
 	ExtensionProperties(..), extensionPropertiesFromCore,
@@ -115,6 +116,13 @@ type Patch = Word16	-- 0 <= patch < 4095
 
 makeApiVersion :: Variant -> Major -> Minor -> Patch -> ApiVersion
 makeApiVersion v mj mn p = ApiVersion $ C.makeApiVersion v mj mn p
+
+fromApiVersion :: ApiVersion -> (Variant, Major, Minor, Patch)
+fromApiVersion (ApiVersion av) = let
+	vr = fromIntegral $ av `shiftR` 29
+	mj = fromIntegral $ (av `shiftR` 22) .&. 0x7f
+	mn = fromIntegral $ (av `shiftR` 12) .&. 0x3ff
+	pt = fromIntegral $ av .&. 0xfff in (vr, mj, mn, pt)
 
 applicationInfoToCore :: WithPoked (TMaybe.M mn) =>
 	ApplicationInfo mn -> (Ptr C.ApplicationInfo -> IO a) -> IO ()
