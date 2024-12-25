@@ -33,7 +33,6 @@ import Foreign.Marshal
 import Foreign.Storable
 import Foreign.Storable.PeekPoke (
 	WithPoked, withPoked', withPtrS, pattern NullPtr )
-import Foreign.Storable.HeteroList
 import Foreign.C.Enum
 import Control.Arrow
 import Control.Monad.Cont
@@ -44,7 +43,6 @@ import Data.Bits
 import Data.List (genericLength)
 import Data.HeteroParList qualified as HeteroParList
 import Data.Word
-import Data.Ix
 
 import Data.Text qualified as T
 import Data.Text.Foreign.MiscYj

@@ -20,7 +20,7 @@ module Gpu.Vulkan.Image.Middle (
 
 	-- * BLIT
 
-	Blit(..), SubresourceLayers(..),
+	Blit(..), Blit2(..), SubresourceLayers(..),
 
 	-- * OTHERS
 

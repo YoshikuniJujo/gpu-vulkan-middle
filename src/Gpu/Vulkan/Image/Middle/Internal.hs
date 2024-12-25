@@ -31,7 +31,7 @@ module Gpu.Vulkan.Image.Middle.Internal (
 
 	-- * BLIT
 
-	Blit(..), blitToCore,
+	Blit(..), blitToCore, Blit2(..), blit2ToCore,
 	SubresourceLayers(..), subresourceLayersToCore,
 
 	-- * OTHERS
@@ -382,6 +382,32 @@ blitToCore Blit {
 	C.blitSrcOffsets = [sof, sot],
 	C.blitDstSubresource = subresourceLayersToCore dsr,
 	C.blitDstOffsets = [dof, dot] }
+
+data Blit2 mn = Blit2 {
+	blit2Next :: TMaybe.M mn,
+	blit2SrcSubresource :: SubresourceLayers,
+	blit2SrcOffsetFrom :: Offset3d,
+	blit2SrcOffsetTo :: Offset3d,
+	blit2DstSubresource :: SubresourceLayers,
+	blit2DstOffsetFrom :: Offset3d,
+	blit2DstOffsetTo :: Offset3d }
+
+deriving instance Show (TMaybe.M mn) => Show (Blit2 mn)
+
+blit2ToCore :: WithPoked (TMaybe.M mn) => Blit2 mn -> (C.Blit2 -> IO a) -> IO ()
+blit2ToCore Blit2 {
+	blit2Next = mnxt,
+	blit2SrcSubresource = ssr,
+	blit2SrcOffsetFrom = sof, blit2SrcOffsetTo = sot,
+	blit2DstSubresource = dsr,
+	blit2DstOffsetFrom = dof, blit2DstOffsetTo = dot } f =
+	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
+	f C.Blit2 {
+	C.blit2SType = (), C.blit2PNext = pnxt',
+	C.blit2SrcSubresource = subresourceLayersToCore ssr,
+	C.blit2SrcOffsets = [sof, sot],
+	C.blit2DstSubresource = subresourceLayersToCore dsr,
+	C.blit2DstOffsets = [dof, dot] }
 
 data Subresource = Subresource {
 	subresourceAspectMask :: AspectFlags,
