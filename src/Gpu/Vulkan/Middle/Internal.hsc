@@ -46,7 +46,8 @@ module Gpu.Vulkan.Middle.Internal (
 
 	Size(..),
 
-	DependencyInfo(..), dependencyInfoToCore
+	DependencyInfo(..), dependencyInfoToCore,
+	BlitImageInfo2(..), blitImageInfo2ToCore
 
 	) where
 
@@ -70,6 +71,7 @@ import Data.HeteroParList (pattern (:**))
 import Data.Word
 import Data.Text.Foreign.MiscYj
 import Data.Color.Internal
+import Data.IORef
 
 import qualified Data.Text as T
 
@@ -87,6 +89,7 @@ import Gpu.Vulkan.Middle.Types
 import qualified Gpu.Vulkan.Memory.Middle.Internal as Memory
 import {-# SOURCE #-} qualified Gpu.Vulkan.Buffer.Middle.Internal as Buffer
 import qualified Gpu.Vulkan.Image.Middle.Internal as Image
+import qualified Gpu.Vulkan.Image.Enum as Image
 
 #include <vulkan/vulkan.h>
 
@@ -480,3 +483,48 @@ dependencyInfoToCore DependencyInfo {
 	mbc = TL.length @_ @mbs
 	bmbc = TL.length @_ @bmbs
 	imbc = TL.length @_ @imbs
+
+data BlitImageInfo2 mn ras = BlitImageInfo2 {
+	blitImageInfo2Next :: TMaybe.M mn,
+	blitImageInfo2SrcImage :: Image.I,
+	blitImageInfo2SrcImageLayout :: Image.Layout,
+	blitImageInfo2DstImage :: Image.I,
+	blitImageInfo2DstImageLayout :: Image.Layout,
+	blitImageInfo2Regions :: HPList.PL Image.Blit2 ras,
+	blitImageInfo2Filter :: Filter }
+
+blitImageInfo2ToCore ::
+	forall mn ras a . (
+	TL.Length ras, HeteroParList.ToListWithCCpsM' WithPoked TMaybe.M ras
+	) =>
+	WithPoked (TMaybe.M mn) =>
+	BlitImageInfo2 mn ras -> (Ptr C.BlitImageInfo2 -> IO a) -> IO ()
+blitImageInfo2ToCore BlitImageInfo2 {
+	blitImageInfo2Next = mnxt,
+	blitImageInfo2SrcImage = Image.I rsi,
+	blitImageInfo2SrcImageLayout = Image.Layout sil,
+	blitImageInfo2DstImage = Image.I rdi,
+	blitImageInfo2DstImageLayout = Image.Layout dil,
+	blitImageInfo2Regions = rs,
+	blitImageInfo2Filter = Filter flt
+	} f =
+	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
+	readIORef rsi >>= \(_, si) ->
+	readIORef rdi >>= \(_, di) ->
+	allocaArray rc \prs -> do
+	HPList.withListWithCCpsM' @_ @WithPoked @TMaybe.M
+		rs Image.blit2ToCore \crs -> pokeArray prs crs
+	let	cbii = C.BlitImageInfo2 {
+			C.blitImageInfo2SType = (),
+			C.blitImageInfo2PNext = pnxt',
+			C.blitImageInfo2SrcImage = si,
+			C.blitImageInfo2SrcImageLayout = sil,
+			C.blitImageInfo2DstImage = di,
+			C.blitImageInfo2DstImageLayout = dil,
+			C.blitImageInfo2RegionCount = rc,
+			C.blitImageInfo2PRegions = prs,
+			C.blitImageInfo2Filter = flt }
+	withPoked cbii f
+	where
+	rc :: Integral n => n
+	rc = TL.length @_ @ras
