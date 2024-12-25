@@ -30,7 +30,7 @@ module Gpu.Vulkan.Cmd.Middle (
 
 	-- * COPY BUFFERS AND IMAGES
 
-	copyBuffer, copyBufferToImage, copyImageToBuffer, blitImage,
+	copyBuffer, copyBufferToImage, copyImageToBuffer, blitImage, blitImage2,
 
 	-- * CLEAR COLOR IMAGE
 
@@ -251,6 +251,13 @@ blitImage (CommandBuffer.M.C _ cb)
 	lift do (_, src) <- readIORef rsrc
 		(_, dst) <- readIORef rdst
 		C.blitImage cb src srcLyt dst dstLyt (fromIntegral bltc) pblts ft
+
+blitImage2 :: (
+	WithPoked (TMaybe.M mn),
+	TList.Length ras, HPList.ToListWithCCpsM' WithPoked TMaybe.M ras ) =>
+	CommandBuffer.M.C -> BlitImageInfo2 mn ras -> IO ()
+blitImage2 (CommandBuffer.M.C _ cb) bii =
+	blitImageInfo2ToCore bii \pcbii -> C.blitImage2 cb pcbii
 
 resetQueryPool :: CommandBuffer.M.C -> QueryPool.Q -> Word32 -> Word32 -> IO ()
 resetQueryPool (CommandBuffer.M.C _ c) (QueryPool.Q q) fq qc =
