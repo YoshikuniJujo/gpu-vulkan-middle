@@ -71,7 +71,9 @@ module Gpu.Vulkan.Middle (
 
 	Size(..),
 
-	DependencyInfo(..), BlitImageInfo2(..)
+	DependencyInfo(..), BlitImageInfo2(..),
+
+	remainingMipLevels, remainingArrayLayers
 
 	) where
 

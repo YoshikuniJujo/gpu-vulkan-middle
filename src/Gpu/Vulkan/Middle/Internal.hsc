@@ -47,7 +47,9 @@ module Gpu.Vulkan.Middle.Internal (
 	Size(..),
 
 	DependencyInfo(..), dependencyInfoToCore,
-	BlitImageInfo2(..), blitImageInfo2ToCore
+	BlitImageInfo2(..), blitImageInfo2ToCore,
+
+	remainingMipLevels, remainingArrayLayers
 
 	) where
 
@@ -528,3 +530,7 @@ blitImageInfo2ToCore BlitImageInfo2 {
 	where
 	rc :: Integral n => n
 	rc = TL.length @_ @ras
+
+remainingMipLevels, remainingArrayLayers :: Word32
+remainingMipLevels = #{const VK_REMAINING_MIP_LEVELS}
+remainingArrayLayers = #{const VK_REMAINING_ARRAY_LAYERS}
