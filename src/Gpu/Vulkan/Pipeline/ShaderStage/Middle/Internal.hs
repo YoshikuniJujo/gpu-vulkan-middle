@@ -19,6 +19,7 @@ import Foreign.Storable.PeekPoke
 import Foreign.Storable.HeteroList
 import Data.TypeLevel.Maybe qualified as TMaybe
 import Data.TypeLevel.Tuple.Uncurry
+import qualified Data.HeteroParList as HPList
 import qualified Data.HeteroParList as HeteroParList
 import Data.HeteroParList (pattern (:**))
 
@@ -37,7 +38,7 @@ data CreateInfo mn sknd sivs = CreateInfo {
 	createInfoStage :: ShaderStageFlagBits,
 	createInfoModule :: ShaderModule.S sknd,
 	createInfoName :: BS.ByteString,
-	createInfoSpecializationInfo :: Maybe (HeteroParList.L sivs) }
+	createInfoSpecializationInfo :: HeteroParList.L sivs }
 
 deriving instance (Show (TMaybe.M mn), Show (HeteroParList.L sivs)) =>
 	Show (CreateInfo mn sknd sivs)
@@ -63,8 +64,8 @@ createInfoToCore CreateInfo {
 			C.createInfoPName = cnm,
 			C.createInfoPSpecializationInfo = pcsi } in
 	case mxs of
-		Nothing -> f $ ci NullPtr
-		Just xs -> Specialization.infoToCore xs \csi ->
+		HPList.Nil -> f $ ci NullPtr
+		xs -> Specialization.infoToCore xs \csi ->
 			withPoked csi $ f . ci
 
 class CreateInfoListToCore cias where
