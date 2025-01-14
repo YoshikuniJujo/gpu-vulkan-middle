@@ -4,7 +4,7 @@ module Gpu.Vulkan.ImageView.Middle (
 
 	-- * CREATE AND DESTROY
 
-	create, recreate, recreate', destroy, I, CreateInfo(..),
+	create, null, recreate, recreate', destroy, I, CreateInfo(..),
 
 	-- ** Image Views Group
 
@@ -12,5 +12,5 @@ module Gpu.Vulkan.ImageView.Middle (
 
 	) where
 
-import Prelude hiding (lookup)
+import Prelude hiding (null, lookup)
 import Gpu.Vulkan.ImageView.Middle.Internal
