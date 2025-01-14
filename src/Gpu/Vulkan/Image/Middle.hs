@@ -4,7 +4,7 @@ module Gpu.Vulkan.Image.Middle (
 
 	-- * CREATE AND DESTROY
 
-	create, recreate, recreate', destroy, I, CreateInfo(..),
+	create, recreate, recreate', destroy, I, null, CreateInfo(..),
 
 	-- ** Manage Multiple Image
 

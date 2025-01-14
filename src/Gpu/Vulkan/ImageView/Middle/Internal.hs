@@ -7,14 +7,14 @@
 {-# OPTIONS_GHC -Wall -fno-warn-tabs #-}
 
 module Gpu.Vulkan.ImageView.Middle.Internal (
-	I, CreateInfo(..), create, recreate, recreate', destroy,
+	I, null, CreateInfo(..), create, recreate, recreate', destroy,
 
 	group, create', destroy', lookup, Group,
 
 	iToCore
 	) where
 
-import Prelude hiding (lookup)
+import Prelude hiding (null, lookup)
 
 import Foreign.Ptr
 import Foreign.Marshal
@@ -38,6 +38,8 @@ import Gpu.Vulkan.AllocationCallbacks.Middle.Internal
 import qualified Gpu.Vulkan.Device.Middle.Types as Device
 import qualified Gpu.Vulkan.Image.Middle.Internal as Image
 import qualified Gpu.Vulkan.ImageView.Core as C
+
+import Gpu.Vulkan.Base.Middle.Internal
 
 data CreateInfo mn = CreateInfo {
 	createInfoNext :: TMaybe.M mn,
@@ -72,6 +74,9 @@ createInfoToCore CreateInfo {
 	withPoked ci f
 
 newtype I = I (IORef C.I)
+
+null :: IO I
+null = I <$> newIORef NullHandle
 
 instance Show I where show _ = "Vk.ImageView.I"
 
