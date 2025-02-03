@@ -35,6 +35,7 @@ createInfoToCore CreateInfo {
 	createInfoNext = mnxt,
 	createInfoPhysicalDevices = (id &&& length) -> (pds, pdc)
 	} f =
+	putStrLn "createInfoToCore begin" >>
 	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
 	alloca \pci -> allocaArray pdc \ppds -> do
 		pokeArray ppds (phdToCore <$> pds)
