@@ -1,5 +1,5 @@
 name:                gpu-vulkan-middle
-version:             0.1.0.73
+version:             0.1.0.74
 github:              "YoshikuniJujo/gpu-vulkan-middle"
 license:             BSD3
 author:              "Yoshikuni Jujo"
@@ -104,6 +104,7 @@ library:
   - Gpu.Vulkan.Device.Enum
   - Gpu.Vulkan.Device.Middle
   - Gpu.Vulkan.Device.Middle.Internal
+  - Gpu.Vulkan.Device.GroupDevice.Middle
   - Gpu.Vulkan.Enum
   - Gpu.Vulkan.Exception.Enum
   - Gpu.Vulkan.Exception.Middle

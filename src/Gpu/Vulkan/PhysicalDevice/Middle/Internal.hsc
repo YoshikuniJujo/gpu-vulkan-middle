@@ -5,7 +5,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE FlexibleContexts, UndecidableInstances #-}
 {-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE StandaloneDeriving #-}
+{-# LANGUAGE StandaloneDeriving, GeneralizedNewtypeDeriving #-}
 {-# OPTIONS_GHC -Wall -fno-warn-tabs #-}
 
 module Gpu.Vulkan.PhysicalDevice.Middle.Internal (
@@ -69,7 +69,7 @@ import Gpu.Vulkan.PNext.Middle.Internal
 
 #include <vulkan/vulkan.h>
 
-newtype P = P C.P deriving Show
+newtype P = P C.P deriving (Show, Storable)
 
 enumerate :: Instance.M.I -> IO [P]
 enumerate (Instance.M.I ist) = map P <$> alloca \pdvcc ->
