@@ -4,7 +4,8 @@ module Gpu.Vulkan.PhysicalDevice.Middle (
 
 	-- * ENUMERATE, PROPERTIES AND FEATURES
 
-	enumerate, P, getProperties, Properties(..), getFeatures,
+	enumerate, P, getProperties, Properties(..), SparseProperties(..),
+	getFeatures,
 
 	-- ** Get Properties 2
 
