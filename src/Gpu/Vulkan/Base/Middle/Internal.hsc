@@ -29,8 +29,8 @@ boolToBool32 True = #{const VK_TRUE}
 bool32ToBool :: #{type VkBool32} -> Bool
 bool32ToBool #{const VK_FALSE} = False
 bool32ToBool #{const VK_TRUE} = True
-bool32ToBool _ = error $
-	"Application must not pass any other values than " ++
+bool32ToBool b = error $
+	"Application must not pass any other values (" ++ show b ++ ") than " ++
 	"VK_TRUE or VK_FALSE into a Gpu.Vulkan implementation " ++
 	"where a VkBool32 is expected"
 
