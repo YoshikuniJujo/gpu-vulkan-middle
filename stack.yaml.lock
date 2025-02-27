@@ -5,12 +5,16 @@
 
 packages:
 - completed:
-    hackage: gpu-vulkan-core-0.1.0.21@sha256:347fcc9b982033e2162d1106e891f6d57ee251a79bdd8f9398f5ca918f3c9e91,3516
+    commit: a2fe93aaf7eb8951ab4781a4b0ae701a1e1c1fa0
+    git: https://github.com/YoshikuniJujo/gpu-vulkan-core.git
+    name: gpu-vulkan-core
     pantry-tree:
-      sha256: 65e73d0f6ffe0bfbd8545b31671d21ef2fa69553644474d181917fef1a4a0625
-      size: 5235
+      sha256: 46154b6e7ff2e6dca3fbb4df3685f0e3b17bf0ecd8a2e4ddd9e58fa1c01cab36
+      size: 5711
+    version: 0.1.0.21
   original:
-    hackage: gpu-vulkan-core-0.1.0.21
+    commit: a2fe93aaf7eb8951ab4781a4b0ae701a1e1c1fa0
+    git: https://github.com/YoshikuniJujo/gpu-vulkan-core.git
 - completed:
     hackage: language-spir-v-0.1.0.3@sha256:c07d92777e2b0e4ac9bd3ef0902e50c046d42edf1a1a98d17e78d039d60d1351,2079
     pantry-tree:

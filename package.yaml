@@ -159,6 +159,7 @@ library:
   - Gpu.Vulkan.QueueFamily.Middle
   - Gpu.Vulkan.RenderPass.Enum
   - Gpu.Vulkan.RenderPass.Middle
+  - Gpu.Vulkan.Rendering.Middle
   - Gpu.Vulkan.Sample.Enum
   - Gpu.Vulkan.Sample.Middle
   - Gpu.Vulkan.Sampler.Enum

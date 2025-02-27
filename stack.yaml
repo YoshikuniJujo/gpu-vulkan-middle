@@ -41,9 +41,9 @@ packages:
 #   commit: e7b331f14bcffb8367cd58fbfc8b40ec7642100a
 
 extra-deps:
-  # - git: https://github.com/YoshikuniJujo/gpu-vulkan-core.git
-  # commit: bf6219f56a7a99678f1bca7bbdb485737186abcf
-  - gpu-vulkan-core-0.1.0.21
+  - git: https://github.com/YoshikuniJujo/gpu-vulkan-core.git
+    commit: a2fe93aaf7eb8951ab4781a4b0ae701a1e1c1fa0
+    #  - gpu-vulkan-core-0.1.0.21
   - language-spir-v-0.1.0.3
 
 # Override default flag values for local packages and extra-deps

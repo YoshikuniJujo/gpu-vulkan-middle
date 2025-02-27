@@ -122,6 +122,7 @@ library
       Gpu.Vulkan.QueueFamily.Middle
       Gpu.Vulkan.RenderPass.Enum
       Gpu.Vulkan.RenderPass.Middle
+      Gpu.Vulkan.Rendering.Middle
       Gpu.Vulkan.Sample.Enum
       Gpu.Vulkan.Sample.Middle
       Gpu.Vulkan.Sampler.Enum
@@ -180,6 +181,7 @@ library
       Gpu.Vulkan.QueryPool.Middle.Internal
       Gpu.Vulkan.QueueFamily.EnumManual
       Gpu.Vulkan.QueueFamily.Middle.Internal
+      Gpu.Vulkan.Rendering.Middle.Internal
       Gpu.Vulkan.RenderPass.Middle.Internal
       Gpu.Vulkan.Sample.Middle.Internal
       Gpu.Vulkan.Sampler.Middle.Internal
