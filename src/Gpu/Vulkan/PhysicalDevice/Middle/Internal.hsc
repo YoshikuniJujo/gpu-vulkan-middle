@@ -156,8 +156,8 @@ getFeatures (P pdvc) = featuresFromCore <$> alloca \pfts -> do
 	peek pfts
 
 getFeatures2 :: forall mn . ReadChain mn => P -> IO (Features2 mn)
-getFeatures2 (P pdvc) = clearedChain @mn \pn ->
-	features2FromCore =<< alloca \pfts -> do
+getFeatures2 (P pdvc) = features2FromCore =<<
+	clearedChain @mn \pn -> alloca \pfts -> do
 		cfs <- C.getClearedFeatures
 		poke pfts $ C.Features2 {
 			C.features2SType = (),
