@@ -35,6 +35,8 @@ import qualified Gpu.Vulkan.Subpass.Middle.Internal as Subpass
 import qualified Gpu.Vulkan.Framebuffer.Middle.Internal as Framebuffer
 import qualified Gpu.Vulkan.RenderPass.Core as C
 
+import Gpu.Vulkan.Base.Middle.Internal
+
 data CreateInfo mn = CreateInfo {
 	createInfoNext :: TMaybe.M mn,
 	createInfoFlags :: CreateFlags,
@@ -75,6 +77,9 @@ createInfoToCore CreateInfo {
 	withPoked ci f
 
 newtype R = R C.R deriving Show
+
+null :: R
+null = R NullHandle
 
 create :: WithPoked (TMaybe.M mn) =>
 	Device.D -> CreateInfo mn -> TPMaybe.M AllocationCallbacks.A mc -> IO R
