@@ -16,6 +16,7 @@ import Foreign.Marshal.Alloc
 import Foreign.Marshal.Array
 import Foreign.Storable
 import Foreign.Storable.PeekPoke
+import Control.Monad
 import Data.TypeLevel.Tuple.Uncurry
 import Data.TypeLevel.Tuple.Index
 import Data.TypeLevel.Maybe qualified as TMaybe
@@ -67,11 +68,11 @@ infoToCore Info {
 	infoStencilAttachment = sa
 	} f =
 	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
-	allocaArray cac \pcas -> alloca \pda -> alloca \psa -> do
+	allocaArray cac \pcas ->
+	attachmentInfoToCore'' da \pda ->
+	attachmentInfoToCore'' sa \psa -> do
 	HPList.withListWithCCpsM'' @AttachmentInfoToCore
 		cas attachmentInfoToCore' \ccas -> pokeArray pcas ccas
-	attachmentInfoToCore'' da \cda -> poke pda cda
-	attachmentInfoToCore'' sa \csa -> poke psa csa
 	f C.Info {
 		C.infoSType = (), C.infoPNext = pnxt', C.infoFlags = flg,
 		C.infoRenderArea = ra, C.infoLayerCount = lc,
@@ -121,13 +122,17 @@ instance (WithPoked (TMaybe.M (I0_2 mnct)), ClearValueToCore (I1_2 mnct)) =>
 
 class AttachmentInfoToCoreMaybe mmnct where
 	attachmentInfoToCore'' ::
-		TPMaybe.M (U2 AttachmentInfo) mmnct -> (C.AttachmentInfo -> IO r) -> IO ()
+		TPMaybe.M (U2 AttachmentInfo) mmnct ->
+		(Ptr C.AttachmentInfo -> IO r) -> IO ()
 
 instance AttachmentInfoToCoreMaybe 'Nothing where
-	attachmentInfoToCore'' TPMaybe.N _ = pure ()
+	attachmentInfoToCore'' TPMaybe.N f = void $ f nullPtr
 
 instance AttachmentInfoToCore mnct => AttachmentInfoToCoreMaybe ('Just mnct) where
-	attachmentInfoToCore'' (TPMaybe.J ai) = attachmentInfoToCore' ai
+	attachmentInfoToCore'' (TPMaybe.J ai) f =
+		alloca \p -> attachmentInfoToCore' ai \c -> do
+			poke p c
+			f p
 
 attachmentInfoToCore' :: AttachmentInfoToCore mnct =>
 	U2 AttachmentInfo mnct -> (C.AttachmentInfo -> IO r) -> IO ()
