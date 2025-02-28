@@ -116,6 +116,9 @@ attachmentInfoZero mnxt = do
 class (WithPoked (TMaybe.M (I0_2 mnct)), ClearValueToCore (I1_2 mnct)) =>
 	AttachmentInfoToCore mnct
 
+instance (WithPoked (TMaybe.M (I0_2 mnct)), ClearValueToCore (I1_2 mnct)) =>
+	AttachmentInfoToCore mnct
+
 class AttachmentInfoToCoreMaybe mmnct where
 	attachmentInfoToCore'' ::
 		TPMaybe.M (U2 AttachmentInfo) mmnct -> (C.AttachmentInfo -> IO r) -> IO ()
