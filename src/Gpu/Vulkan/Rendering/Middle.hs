@@ -2,6 +2,7 @@
 
 module Gpu.Vulkan.Rendering.Middle (
 	Info(..),
-	AttachmentInfo(..), attachmentInfoZero, AttachmentInfoToCore ) where
+	AttachmentInfo(..), attachmentInfoZero,
+	AttachmentInfoToCore, AttachmentInfoToCoreMaybe ) where
 
 import Gpu.Vulkan.Rendering.Middle.Internal
