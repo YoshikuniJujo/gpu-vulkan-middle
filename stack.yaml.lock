@@ -5,15 +5,15 @@
 
 packages:
 - completed:
-    commit: eead1770b34e08ad2451e83d662647a215276ad2
+    commit: 977da967ce499c088baf9eacbba2c1689d1955b1
     git: https://github.com/YoshikuniJujo/gpu-vulkan-core.git
     name: gpu-vulkan-core
     pantry-tree:
-      sha256: b4bbeef62e410e18559531662de192628174e168cf89d9e419ff23972b49e2f5
+      sha256: 558b7831403a41ba9dd0dcb56b9ef32c1604d4e1850070b12419ae55e4b77aba
       size: 5711
     version: 0.1.0.21
   original:
-    commit: eead1770b34e08ad2451e83d662647a215276ad2
+    commit: 977da967ce499c088baf9eacbba2c1689d1955b1
     git: https://github.com/YoshikuniJujo/gpu-vulkan-core.git
 - completed:
     hackage: language-spir-v-0.1.0.3@sha256:c07d92777e2b0e4ac9bd3ef0902e50c046d42edf1a1a98d17e78d039d60d1351,2079
@@ -22,6 +22,13 @@ packages:
       size: 650
   original:
     hackage: language-spir-v-0.1.0.3
+- completed:
+    hackage: hetero-parameter-list-0.1.0.20@sha256:61ad64240999e4027fce99817fa939a0d2bfd0bbd81f9f444b4a8f774c51cd3e,1876
+    pantry-tree:
+      sha256: 2c2b3ffe107f59c42ef4ba6f535ddf74d035516017ff30564293a835b74c754e
+      size: 459
+  original:
+    hackage: hetero-parameter-list-0.1.0.20
 snapshots:
 - completed:
     sha256: 7ec0e288e359b586f3e98bfdc35152922d9b7f2f97346a2e7b4c1b85833e4521
