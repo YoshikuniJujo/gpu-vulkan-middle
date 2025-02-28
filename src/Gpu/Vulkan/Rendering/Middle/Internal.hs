@@ -150,17 +150,16 @@ attachmentInfoToCore AttachmentInfo {
 	attachmentInfoLoadOp = Att.LoadOp lo,
 	attachmentInfoStoreOp = Att.StoreOp so,
 	attachmentInfoClearValue = cv } f =
-	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') ->
-	alloca \piv -> alloca \priv -> do
-	poke piv =<< ImgVw.iToCore iv
-	poke priv =<< ImgVw.iToCore riv
+	withPoked' mnxt \pnxt -> withPtrS pnxt \(castPtr -> pnxt') -> do
+	civ <- ImgVw.iToCore iv
+	criv <- ImgVw.iToCore riv
 	f C.AttachmentInfo {
 		C.attachmentInfoSType = (),
 		C.attachmentInfoPNext = pnxt',
-		C.attachmentInfoImageView = piv,
+		C.attachmentInfoImageView = civ,
 		C.attachmentInfoImageLayout = il,
 		C.attachmentInfoResolveMode = rm,
-		C.attachmentInfoResolveImageView = priv,
+		C.attachmentInfoResolveImageView = criv,
 		C.attachmentInfoResolveImageLayout = ril,
 		C.attachmentInfoLoadOp = lo,
 		C.attachmentInfoStoreOp = so,
