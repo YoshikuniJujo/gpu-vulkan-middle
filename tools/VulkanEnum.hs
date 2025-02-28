@@ -24,7 +24,8 @@ type QueryPipelineStatisticFlags = QueryPipelineStatisticFlagBits
 type CullModeFlags = CullModeFlagBits
 type ShaderStageFlags = ShaderStageFlagBits
 type FormatFeatureFlags = FormatFeatureFlagBits
-type SubmitFlags = SubmitFlagBits|]
+type SubmitFlags = SubmitFlagBits
+type RenderingFlags = RenderingFlagBits|]
 
 useEnums :: [(UseEnum, ([(String, Const)], (HaskellName, CName, [DerivName])))]
 useEnums = [
@@ -58,7 +59,9 @@ noZeros = [
 	("Format", "VkFormat", ["Show", "Eq", "Storable"]),
 	("SubmitFlagBits", "VkSubmitFlagBits", ["Show", "Eq", "Storable", "Bits"]),
 	("ResolveModeFlagBits",
-		"VkResolveModeFlagBits", ["Show", "Eq", "Storable", "Bits"])
+		"VkResolveModeFlagBits", ["Show", "Eq", "Storable", "Bits"]),
+	("RenderingFlagBits",
+		"VkRenderingFlagBits", ["Show", "Eq", "Storable", "Bits"])
 	]
 
 zeros :: [([(String, Const)], (HaskellName, CName, [DerivName]))]

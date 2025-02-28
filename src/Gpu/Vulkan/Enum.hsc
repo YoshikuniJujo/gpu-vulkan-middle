@@ -3480,6 +3480,24 @@ enum "ResolveModeFlagBits" ''#{type VkResolveModeFlagBits}
 	("ResolveModeFlagBitsMaxEnum",
 		#{const VK_RESOLVE_MODE_FLAG_BITS_MAX_ENUM}) ]
 
+enum "RenderingFlagBits" ''#{type VkRenderingFlagBits}
+		[''Show, ''Eq, ''Storable, ''Bits] [
+	("RenderingContentsSecondaryCommandBuffersBit",
+		#{const VK_RENDERING_CONTENTS_SECONDARY_COMMAND_BUFFERS_BIT}),
+	("RenderingSuspendingBit", #{const VK_RENDERING_SUSPENDING_BIT}),
+	("RenderingResumingBit", #{const VK_RENDERING_RESUMING_BIT}),
+	("RenderingEnableLegacyDitheringBitExt",
+		#{const VK_RENDERING_ENABLE_LEGACY_DITHERING_BIT_EXT}),
+	("RenderingContentsInlineBitKhr",
+		#{const VK_RENDERING_CONTENTS_INLINE_BIT_KHR}),
+	("RenderingContentsSecondaryCommandBuffersBitKhr",
+		#{const VK_RENDERING_CONTENTS_SECONDARY_COMMAND_BUFFERS_BIT_KHR}),
+	("RenderingSuspendingBitKhr", #{const VK_RENDERING_SUSPENDING_BIT_KHR}),
+	("RenderingResumingBitKhr", #{const VK_RENDERING_RESUMING_BIT_KHR}),
+	("RenderingContentsInlineBitExt",
+		#{const VK_RENDERING_CONTENTS_INLINE_BIT_EXT}),
+	("RenderingFlagBitsMaxEnum", #{const VK_RENDERING_FLAG_BITS_MAX_ENUM}) ]
+
 enum "AccessFlagBits" ''#{type VkAccessFlagBits}
 		[''Show, ''Eq, ''Storable, ''Bits] [
 	("AccessFlagsZero", 0),
@@ -3746,3 +3764,4 @@ type CullModeFlags = CullModeFlagBits
 type ShaderStageFlags = ShaderStageFlagBits
 type FormatFeatureFlags = FormatFeatureFlagBits
 type SubmitFlags = SubmitFlagBits
+type RenderingFlags = RenderingFlagBits
