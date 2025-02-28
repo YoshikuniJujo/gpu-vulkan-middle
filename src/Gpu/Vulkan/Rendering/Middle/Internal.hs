@@ -15,6 +15,7 @@ import Foreign.Marshal.Alloc
 import Foreign.Storable
 import Foreign.Storable.PeekPoke
 import Data.TypeLevel.Maybe qualified as TMaybe
+import Data.Default
 import Data.Word
 import Data.Int
 import Data.Color
@@ -39,6 +40,22 @@ data AttachmentInfo mn ct = AttachmentInfo {
 	attachmentInfoClearValue :: Vk.ClearValue ct }
 
 deriving instance Show (TMaybe.M mn) => Show (AttachmentInfo mn ct)
+
+attachmentInfoZero ::
+	Default (Vk.ClearValue ct) => TMaybe.M mn -> IO (AttachmentInfo mn ct)
+attachmentInfoZero mnxt = do
+	niv <- ImgVw.null
+	nriv <- ImgVw.null
+	pure AttachmentInfo {
+		attachmentInfoNext = mnxt,
+		attachmentInfoImageView = niv,
+		attachmentInfoImageLayout = Img.Layout 0,
+		attachmentInfoResolveMode = ResolveModeFlagBits 0,
+		attachmentInfoResolveImageView = nriv,
+		attachmentInfoResolveImageLayout = Img.Layout 0,
+		attachmentInfoLoadOp = Att.LoadOp 0,
+		attachmentInfoStoreOp = Att.StoreOp 0,
+		attachmentInfoClearValue = def }
 
 attachmentInfoToCore :: (WithPoked (TMaybe.M mn), ClearValueToCore ct) =>
 	AttachmentInfo mn ct -> (C.AttachmentInfo -> IO r) -> IO ()

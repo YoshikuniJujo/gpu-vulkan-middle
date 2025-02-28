@@ -224,6 +224,12 @@ data ClearValue (ct :: ClearType) where
 	ClearValueDepthStencil ::
 		C.ClearDepthStencilValue -> ClearValue 'ClearTypeDepthStencil
 
+instance Default (ClearValue ('ClearTypeColor cct)) where
+	def = ClearValueColor $ RgbaWord32 0 0 0 0
+
+instance Default (ClearValue 'ClearTypeDepthStencil) where
+	def = ClearValueDepthStencil $ C.ClearDepthStencilValue 0 0
+
 class ClearColorValueToCore (cct :: ClearColorType) where
 	clearColorValueToCore ::
 		ClearValue ('ClearTypeColor cct) ->
