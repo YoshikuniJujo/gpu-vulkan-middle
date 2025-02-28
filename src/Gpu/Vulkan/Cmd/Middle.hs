@@ -14,6 +14,10 @@ module Gpu.Vulkan.Cmd.Middle (
 
 	beginRenderPass, endRenderPass,
 
+	-- * BEGIN AND END RENDERING
+
+	beginRendering, endRendering,
+
 	-- * DRAW AND DISPATCH
 
 	-- ** Draw
@@ -74,6 +78,7 @@ import qualified Gpu.Vulkan.Device.Middle.Internal as Device
 import qualified Gpu.Vulkan.Cmd.Core as C
 
 import qualified Gpu.Vulkan.RenderPass.Middle.Internal as RenderPass
+import qualified Gpu.Vulkan.Rendering.Middle.Internal as Rendering
 import qualified Gpu.Vulkan.Subpass.Enum as Subpass
 import qualified Gpu.Vulkan.Pipeline.Graphics.Middle.Internal as Pipeline
 import qualified Gpu.Vulkan.Pipeline.Compute.Middle.Internal as Pipeline.Compute
@@ -98,6 +103,19 @@ beginRenderPass (CommandBuffer.M.C _ cb) rpbi (Subpass.Contents spcnt) =
 
 endRenderPass :: CommandBuffer.M.C -> IO ()
 endRenderPass (CommandBuffer.M.C _ cb) = C.endRenderPass cb
+
+beginRendering :: (
+	TList.Length cas, WithPoked (TMaybe.M mn),
+	HeteroParList.ToListWithCCpsM'' Rendering.AttachmentInfoToCore cas,
+	Rendering.AttachmentInfoToCoreMaybe das,
+	Rendering.AttachmentInfoToCoreMaybe sas ) =>
+	CommandBuffer.M.C -> Rendering.Info mn cas das sas -> IO ()
+beginRendering (CommandBuffer.M.C _ cb) i =
+	Rendering.infoToCore i \ci -> alloca \pif ->
+		poke pif ci >> C.beginRendering cb pif
+
+endRendering :: CommandBuffer.M.C -> IO ()
+endRendering (CommandBuffer.M.C _ cb) = C.endRendering cb
 
 bindPipelineGraphics ::
 	CommandBuffer.M.C -> Pipeline.BindPoint -> Pipeline.G -> IO ()
