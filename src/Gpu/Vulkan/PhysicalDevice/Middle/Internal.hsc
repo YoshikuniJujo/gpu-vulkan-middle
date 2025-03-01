@@ -37,6 +37,7 @@ module Gpu.Vulkan.PhysicalDevice.Middle.Internal (
 
 	) where
 
+import GHC.Stack
 import Foreign.Ptr
 import Foreign.Marshal
 import Foreign.Storable
@@ -155,7 +156,7 @@ getFeatures (P pdvc) = featuresFromCore <$> alloca \pfts -> do
 	C.getFeatures pdvc pfts
 	peek pfts
 
-getFeatures2 :: forall mn . ReadChain mn => P -> IO (Features2 mn)
+getFeatures2 :: forall mn . (HasCallStack, ReadChain mn) => P -> IO (Features2 mn)
 getFeatures2 (P pdvc) = features2FromCore =<<
 	clearedChain @mn \pn -> alloca \pfts -> do
 		cfs <- C.getClearedFeatures
