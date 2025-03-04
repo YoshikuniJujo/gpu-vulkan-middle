@@ -97,6 +97,7 @@ library:
   - Gpu.Vulkan.Descriptor.Middle
   - Gpu.Vulkan.DescriptorPool.Enum
   - Gpu.Vulkan.DescriptorPool.Middle
+  - Gpu.Vulkan.DescriptorPool.Middle.Internal
   - Gpu.Vulkan.DescriptorSet.Middle
   - Gpu.Vulkan.DescriptorSetLayout.Enum
   - Gpu.Vulkan.DescriptorSetLayout.Middle
