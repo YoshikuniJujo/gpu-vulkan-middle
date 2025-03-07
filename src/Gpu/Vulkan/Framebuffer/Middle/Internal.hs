@@ -7,7 +7,7 @@
 {-# OPTIONS_GHC -Wall -fno-warn-tabs #-}
 
 module Gpu.Vulkan.Framebuffer.Middle.Internal (
-	F, CreateInfo(..), create, recreate, destroy,
+	F(..), CreateInfo(..), create, recreate, destroy,
 
 	fToCore ) where
 
