@@ -31,7 +31,7 @@ packages:
     hackage: hetero-parameter-list-0.1.0.20
 snapshots:
 - completed:
-    sha256: 890db3d37955b5d7f66cb478d78641bf80698235684c35fcf79353954b3831ac
-    size: 656184
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2025/3/1.yaml
-  original: nightly-2025-03-01
+    sha256: 625d4b8b9fb3109e9c11db854a39ea32a874612c2554e343101dfe39a88071f0
+    size: 658339
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2025/3/6.yaml
+  original: nightly-2025-03-06

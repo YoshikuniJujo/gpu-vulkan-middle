@@ -53,6 +53,7 @@ library
       Gpu.Vulkan.CommandBuffer.Middle
       Gpu.Vulkan.CommandPool.Enum
       Gpu.Vulkan.CommandPool.Middle
+      Gpu.Vulkan.CommandPool.Middle.Internal
       Gpu.Vulkan.Component.Enum
       Gpu.Vulkan.Component.Middle
       Gpu.Vulkan.Data.Middle
@@ -145,7 +146,6 @@ library
       Gpu.Vulkan.Buffer.Middle.Internal
       Gpu.Vulkan.BufferView.Middle.Internal
       Gpu.Vulkan.CommandBuffer.Middle.Internal
-      Gpu.Vulkan.CommandPool.Middle.Internal
       Gpu.Vulkan.Component.Middle.Internal
       Gpu.Vulkan.Descriptor.Middle.Internal
       Gpu.Vulkan.DescriptorSet.Middle.Internal

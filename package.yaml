@@ -90,6 +90,7 @@ library:
   - Gpu.Vulkan.CommandBuffer.Middle
   - Gpu.Vulkan.CommandPool.Enum
   - Gpu.Vulkan.CommandPool.Middle
+  - Gpu.Vulkan.CommandPool.Middle.Internal
   - Gpu.Vulkan.Component.Enum
   - Gpu.Vulkan.Component.Middle
   - Gpu.Vulkan.Data.Middle
