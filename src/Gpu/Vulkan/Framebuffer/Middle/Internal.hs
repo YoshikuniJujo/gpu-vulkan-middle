@@ -22,6 +22,7 @@ import Data.TypeLevel.Maybe qualified as TMaybe
 import Data.TypeLevel.ParMaybe qualified as TPMaybe
 import Data.Word
 import Data.IORef
+import Text.Show.ToolsYj
 
 import Gpu.Vulkan.Exception.Middle.Internal
 import Gpu.Vulkan.Exception.Enum
@@ -71,6 +72,11 @@ createInfoToCore CreateInfo {
 		withPoked ci f
 
 newtype F = F (IORef C.F)
+
+instance ShowIO F where
+	showIO (F rf) = do
+		f <- readIORef rf
+		pure $ "(F <IORef: " ++ show f ++ ">)"
 
 fToCore :: F -> IO C.F
 fToCore (F f) = readIORef f
