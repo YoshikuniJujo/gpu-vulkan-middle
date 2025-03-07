@@ -79,6 +79,7 @@ library
       Gpu.Vulkan.Fence.Middle.Internal
       Gpu.Vulkan.Framebuffer.Enum
       Gpu.Vulkan.Framebuffer.Middle
+      Gpu.Vulkan.Framebuffer.Middle.Internal
       Gpu.Vulkan.Image.Enum
       Gpu.Vulkan.Image.Middle
       Gpu.Vulkan.Image.Middle.Internal
@@ -155,7 +156,6 @@ library
       Gpu.Vulkan.Device.GroupDevice.Middle.Internal
       Gpu.Vulkan.Device.Middle.Types
       Gpu.Vulkan.Exception.Middle.Internal
-      Gpu.Vulkan.Framebuffer.Middle.Internal
       Gpu.Vulkan.Memory.Middle.Internal
       Gpu.Vulkan.Middle.Internal
       Gpu.Vulkan.Middle.Types
