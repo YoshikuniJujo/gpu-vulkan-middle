@@ -105,6 +105,7 @@ library
       Gpu.Vulkan.Pipeline.DynamicState.Middle
       Gpu.Vulkan.Pipeline.Enum
       Gpu.Vulkan.Pipeline.Graphics.Middle
+      Gpu.Vulkan.Pipeline.Graphics.Middle.Internal
       Gpu.Vulkan.Pipeline.InputAssemblyState.Middle
       Gpu.Vulkan.PipelineLayout.Middle
       Gpu.Vulkan.Pipeline.MultisampleState.Middle
@@ -168,7 +169,6 @@ library
       Gpu.Vulkan.Pipeline.Compute.Middle.Internal
       Gpu.Vulkan.Pipeline.DepthStencilState.Middle.Internal
       Gpu.Vulkan.Pipeline.DynamicState.Middle.Internal
-      Gpu.Vulkan.Pipeline.Graphics.Middle.Internal
       Gpu.Vulkan.Pipeline.InputAssemblyState.Middle.Internal
       Gpu.Vulkan.Pipeline.MultisampleState.Middle.Internal
       Gpu.Vulkan.Pipeline.RasterizationState.Middle.Internal

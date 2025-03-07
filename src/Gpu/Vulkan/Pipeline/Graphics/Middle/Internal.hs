@@ -16,7 +16,7 @@ module Gpu.Vulkan.Pipeline.Graphics.Middle.Internal (
 
 	destroyGs,
 
-	G, gNull, gToCore,
+	G(..), gNull, gToCore,
 	) where
 
 import Prelude hiding (length)

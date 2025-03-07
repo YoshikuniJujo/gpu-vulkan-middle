@@ -143,6 +143,7 @@ library:
   - Gpu.Vulkan.Pipeline.DynamicState.Middle
   - Gpu.Vulkan.Pipeline.Enum
   - Gpu.Vulkan.Pipeline.Graphics.Middle
+  - Gpu.Vulkan.Pipeline.Graphics.Middle.Internal
   - Gpu.Vulkan.Pipeline.InputAssemblyState.Middle
   - Gpu.Vulkan.PipelineLayout.Middle
   - Gpu.Vulkan.Pipeline.MultisampleState.Middle
