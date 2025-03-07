@@ -35,6 +35,7 @@ import qualified Data.HeteroParList as HeteroParList
 import Data.HeteroParList (pattern (:**))
 import Data.Word
 import Data.Int
+import Text.Show.ToolsYj
 
 import Gpu.Vulkan.Base.Middle.Internal
 import Gpu.Vulkan.Exception.Middle.Internal
@@ -181,6 +182,11 @@ gNull :: IO G
 gNull = G <$> newIORef NullHandle
 
 newtype G = G (IORef Pipeline.C.P)
+
+instance ShowIO G where
+	showIO (G rp) = do
+		p <- readIORef rp
+		pure $ "(G <IORef: " ++ show p ++ ">)"
 
 gToCore :: G -> IO Pipeline.C.P
 gToCore (G rp) = readIORef rp
