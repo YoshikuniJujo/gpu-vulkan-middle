@@ -215,6 +215,7 @@ library
     , template-haskell <3
     , text <3
     , text-misc-yj <1
+    , tools-yj <1
     , typelevel-tools-yj <1
     , union-color <1
     , uuid <2
@@ -258,6 +259,7 @@ test-suite gpu-vulkan-middle-test
     , template-haskell <3
     , text <3
     , text-misc-yj <1
+    , tools-yj <1
     , typelevel-tools-yj <1
     , union-color <1
     , uuid <2

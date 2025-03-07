@@ -56,6 +56,7 @@ import Data.TypeLevel.ParMaybe qualified as TPMaybe
 import Data.Map qualified as M
 import Data.IORef
 import Data.Word
+import Text.Show.ToolsYj
 
 import Gpu.Vulkan.Core
 import Gpu.Vulkan.Enum
@@ -95,6 +96,11 @@ subresourceRangeToCore SubresourceRange {
 		C.subresourceRangeLayerCount = lyc }
 
 newtype I = I (IORef (Extent3d, C.I))
+
+instance ShowIO I where
+	showIO (I ri) = do
+		i <- readIORef ri
+		pure $ "I <IORef: " ++ show i ++ ">"
 
 data CreateInfo mn = CreateInfo {
 	createInfoNext :: TMaybe.M mn,

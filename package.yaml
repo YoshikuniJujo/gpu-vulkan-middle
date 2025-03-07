@@ -54,6 +54,7 @@ dependencies:
 - storable-hetero-list < 1
 - gpu-vulkan-core >= 0.1.0.11 && < 1
 - language-spir-v < 1
+- tools-yj < 1
 - typelevel-tools-yj < 1
 
 ghc-options:
