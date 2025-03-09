@@ -26,6 +26,7 @@ import Data.TypeLevel.Maybe qualified as TMaybe
 import Data.TypeLevel.ParMaybe qualified as TPMaybe
 import Data.Map qualified as M
 import Data.IORef
+import Text.Show.ToolsYj
 
 import Gpu.Vulkan.Enum
 import Gpu.Vulkan.Exception.Middle.Internal
@@ -79,6 +80,11 @@ null :: IO I
 null = I <$> newIORef NullHandle
 
 instance Show I where show _ = "Vk.ImageView.I"
+
+instance ShowIO I where
+	showIO (I ri) = do
+		i <- readIORef ri
+		pure $ "(I <IORef: " ++ show i ++ ">)"
 
 iToCore :: I -> IO C.I
 iToCore (I i) = readIORef i
