@@ -137,6 +137,7 @@ library:
   - Gpu.Vulkan.PhysicalDevice.Struct
   - Gpu.Vulkan.PipelineCache.Enum
   - Gpu.Vulkan.PipelineCache.Middle
+  - Gpu.Vulkan.PipelineCache.Middle.Internal
   - Gpu.Vulkan.Pipeline.ColorBlendAttachment.Middle
   - Gpu.Vulkan.Pipeline.ColorBlendState.Middle
   - Gpu.Vulkan.Pipeline.Compute.Middle

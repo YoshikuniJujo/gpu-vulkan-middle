@@ -99,6 +99,7 @@ library
       Gpu.Vulkan.PhysicalDevice.Struct
       Gpu.Vulkan.PipelineCache.Enum
       Gpu.Vulkan.PipelineCache.Middle
+      Gpu.Vulkan.PipelineCache.Middle.Internal
       Gpu.Vulkan.Pipeline.ColorBlendAttachment.Middle
       Gpu.Vulkan.Pipeline.ColorBlendState.Middle
       Gpu.Vulkan.Pipeline.Compute.Middle
@@ -176,7 +177,6 @@ library
       Gpu.Vulkan.Pipeline.TessellationState.Middle.Internal
       Gpu.Vulkan.Pipeline.VertexInputState.Middle.Internal
       Gpu.Vulkan.Pipeline.ViewportState.Middle.Internal
-      Gpu.Vulkan.PipelineCache.Middle.Internal
       Gpu.Vulkan.PipelineLayout.Middle.Internal
       Gpu.Vulkan.PushConstant.Middle.Internal
       Gpu.Vulkan.QueryPool.Middle.Internal
