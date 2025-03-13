@@ -179,6 +179,7 @@ library:
   - Gpu.Vulkan.ShaderModule.Middle
   - Gpu.Vulkan.Subpass.Enum
   - Gpu.Vulkan.Subpass.Middle
+  - Gpu.Vulkan.Subpass.Middle.Internal
   - Gpu.Vulkan.VertexInput.Enum
   - Gpu.Vulkan.VertexInput.Middle
   - Gpu.Vulkan.Sparse.Enum
