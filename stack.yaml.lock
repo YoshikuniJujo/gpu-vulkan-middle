@@ -38,7 +38,7 @@ packages:
     hackage: tools-yj-0.1.0.23
 snapshots:
 - completed:
-    sha256: daa5917e1e6ded1c5712023469083c25a71af66bc23069db3dc77764f9d3b052
-    size: 658339
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2025/3/11.yaml
-  original: nightly-2025-03-11
+    sha256: d129ed943d7204d72bbdf2c688d9c68030d901ee06a60223f52eae9c900ba976
+    size: 677117
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2025/4/9.yaml
+  original: nightly-2025-04-09
