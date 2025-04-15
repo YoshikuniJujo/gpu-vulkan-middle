@@ -11,7 +11,7 @@ module Gpu.Vulkan.ImageView.Middle.Internal (
 
 	group, create', destroy', lookup, Group,
 
-	iToCore
+	iToCore, iFromCore
 	) where
 
 import Prelude hiding (null, lookup)
