@@ -21,6 +21,8 @@ enum "CreateFlagBits" ''#{type VkPipelineCacheCreateFlagBits}
 	("CreateFlagsZero", 0),
 	("CreateExternallySynchronizedBit",
 		#{const VK_PIPELINE_CACHE_CREATE_EXTERNALLY_SYNCHRONIZED_BIT}),
+	("CreateInternallySynchronizedMergeBitKhr",
+		#{const VK_PIPELINE_CACHE_CREATE_INTERNALLY_SYNCHRONIZED_MERGE_BIT_KHR}),
 	("CreateExternallySynchronizedBitExt",
 		#{const VK_PIPELINE_CACHE_CREATE_EXTERNALLY_SYNCHRONIZED_BIT_EXT}),
 	("CreateFlagBitsMaxEnum",

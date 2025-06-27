@@ -97,6 +97,8 @@ enum "UsageFlagBits" ''#{type VkBufferUsageFlagBits}
 		#{const VK_BUFFER_USAGE_MICROMAP_BUILD_INPUT_READ_ONLY_BIT_EXT}),
 	("UsageMicromapStorageBitExt",
 		#{const VK_BUFFER_USAGE_MICROMAP_STORAGE_BIT_EXT}),
+	("UsageTileMemoryQcom",
+		#{const VK_BUFFER_USAGE_TILE_MEMORY_QCOM}),
 	("UsageRayTracingBitNv",
 		#{const VK_BUFFER_USAGE_RAY_TRACING_BIT_NV}),
 	("UsageShaderDeviceAddressBitExt",

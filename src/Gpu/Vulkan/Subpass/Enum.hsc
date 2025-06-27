@@ -27,6 +27,8 @@ enum "DescriptionFlagBits" ''#{type VkSubpassDescriptionFlagBits}
 		#{const VK_SUBPASS_DESCRIPTION_FRAGMENT_REGION_BIT_QCOM}),
 	("DescriptionShaderResolveBitQcom",
 		#{const VK_SUBPASS_DESCRIPTION_SHADER_RESOLVE_BIT_QCOM}),
+	("DescriptionTileShadingApronBitQcom",
+		#{const VK_SUBPASS_DESCRIPTION_TILE_SHADING_APRON_BIT_QCOM}),
 	("DescriptionRasterizationOrderAttachmentColorAccessBitExt",
 		#{const VK_SUBPASS_DESCRIPTION_RASTERIZATION_ORDER_ATTACHMENT_COLOR_ACCESS_BIT_EXT}),
 	("DescriptionRasterizationOrderAttachmentDepthAccessBitExt",

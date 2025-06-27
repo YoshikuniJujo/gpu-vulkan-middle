@@ -50,6 +50,8 @@ enum "Type" ''#{type VkDescriptorType}
 	("TypeBlockMatchImageQcom",
 		#{const VK_DESCRIPTOR_TYPE_BLOCK_MATCH_IMAGE_QCOM}),
 	("TypeMutableExt", #{const VK_DESCRIPTOR_TYPE_MUTABLE_EXT}),
+	("TypePartitionedAccelerationStructureNv",
+		#{const VK_DESCRIPTOR_TYPE_PARTITIONED_ACCELERATION_STRUCTURE_NV}),
 	("TypeInlineUniformBlockExt",
 		#{const VK_DESCRIPTOR_TYPE_INLINE_UNIFORM_BLOCK_EXT}),
 	("TypeMutableValve",

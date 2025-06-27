@@ -46,6 +46,8 @@ enum "HeapFlagBits" ''#{type VkMemoryHeapFlagBits}
 	("HeapDeviceLocalBit", #{const VK_MEMORY_HEAP_DEVICE_LOCAL_BIT}),
 	("HeapMultiInstanceBit",
 		#{const VK_MEMORY_HEAP_MULTI_INSTANCE_BIT}),
+	("HeapTileMemoryBitQcom",
+		#{const VK_MEMORY_HEAP_TILE_MEMORY_BIT_QCOM}),
 	("HeapMultiInstanceBitKhr",
 		#{const VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHR}),
 	("HeapFlagBitsMaxEnum",
