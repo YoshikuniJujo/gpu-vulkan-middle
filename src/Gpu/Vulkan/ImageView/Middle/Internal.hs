@@ -7,7 +7,7 @@
 {-# OPTIONS_GHC -Wall -fno-warn-tabs #-}
 
 module Gpu.Vulkan.ImageView.Middle.Internal (
-	I, null, CreateInfo(..), create, recreate, recreate', destroy,
+	I(..), null, CreateInfo(..), create, recreate, recreate', destroy,
 
 	group, create', destroy', lookup, Group,
 
