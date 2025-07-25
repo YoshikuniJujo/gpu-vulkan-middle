@@ -1,6 +1,7 @@
 {-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE BlockArguments, LambdaCase #-}
 {-# LANGUAGE MonoLocalBinds #-}
+{-# LANGUAGE DataKinds #-}
 {-# OPTIONS_GHC -Wall -fno-warn-tabs #-}
 
 module Gpu.Vulkan.AllocationCallbacks.Middle.Internal (
@@ -24,7 +25,7 @@ module Gpu.Vulkan.AllocationCallbacks.Middle.Internal (
 
 	-- * INTERNAL USE
 
-	mToCore
+	mToCore, MFromCore(..)
 
 	) where
 
@@ -123,6 +124,24 @@ mToCore = TPMaybe.maybe ((() <$) . ($ NullPtr)) toCoreNew
 
 toCoreNew :: A a -> (Ptr C.A -> IO b) -> IO ()
 toCoreNew (A ac) f = () <$ alloca \p -> poke p ac >> f p
+
+fromCore :: Ptr C.A -> IO (A a)
+fromCore pa = A <$> peek pa
+
+class MFromCore ma where
+	mFromCore :: Ptr C.A -> IO (TPMaybe.M A ma)
+
+instance MFromCore 'Nothing where
+	mFromCore pa
+		| pa == nullPtr = pure TPMaybe.N
+		| otherwise =
+			error "AllocationCallbacks pointer should be nullPtr"
+
+instance MFromCore ('Just a) where
+	mFromCore pa
+		| pa == nullPtr = error
+			"AllocationCallbacks pointer should not be nullPtr"
+		| otherwise = TPMaybe.J <$> fromCore pa
 
 mkCallbacksNew :: FunctionsInfo a -> IO (Functions a)
 mkCallbacksNew ac = do
