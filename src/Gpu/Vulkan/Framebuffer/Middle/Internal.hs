@@ -34,6 +34,8 @@ import {-# SOURCE #-} qualified Gpu.Vulkan.RenderPass.Middle.Internal as RenderP
 import qualified Gpu.Vulkan.ImageView.Middle.Internal as ImageView
 import qualified Gpu.Vulkan.Framebuffer.Core as C
 
+import Text.Show.ToolsYj
+
 data CreateInfo mn = CreateInfo {
 	createInfoNext :: TMaybe.M mn,
 	createInfoFlags :: CreateFlags,
@@ -71,6 +73,11 @@ createInfoToCore CreateInfo {
 		withPoked ci f
 
 newtype F = F (IORef C.F)
+
+instance ShowIO F where
+	showIO (F rf) = do
+		f <- readIORef rf
+		pure $ "(F <IORef: " ++ show f ++ ">)"
 
 fToCore :: F -> IO C.F
 fToCore (F f) = readIORef f

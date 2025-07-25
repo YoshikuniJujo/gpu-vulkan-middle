@@ -18,9 +18,23 @@ packages:
       size: 650
   original:
     hackage: language-spir-v-0.1.0.3
+- completed:
+    hackage: ranged-list-0.1.2.3@sha256:003aae13aee986a50e3cf34f448c0d106c51f063d92d0fcd5d10043b77ff1c01,2220
+    pantry-tree:
+      sha256: 75dc8c74bdf8ac9a36ed3c093e43bac33d0c7b35ccd99750bc0a6ca30c95c1ae
+      size: 1339
+  original:
+    hackage: ranged-list-0.1.2.3
+- completed:
+    hackage: typecheck-plugin-nat-simple-0.1.0.12@sha256:bf2467eadba64ab51a7baa9ac5d5fd4a5b82790e377e97bd3e5388eede2d1b99,3118
+    pantry-tree:
+      sha256: 055f61503c4c5910de08ff4f35f375e52f9ac490d995d26ab50b95942a777934
+      size: 1743
+  original:
+    hackage: typecheck-plugin-nat-simple-0.1.0.12
 snapshots:
 - completed:
-    sha256: 7ec0e288e359b586f3e98bfdc35152922d9b7f2f97346a2e7b4c1b85833e4521
-    size: 654479
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2025/2/27.yaml
-  original: nightly-2025-02-27
+    sha256: 92ad48278d85d4c86e6459206dc24cfa806dfc121733f6f1396909090b9aed3c
+    size: 669892
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2025/7/25.yaml
+  original: nightly-2025-07-25
