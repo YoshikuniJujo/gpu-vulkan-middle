@@ -70,6 +70,9 @@ data C = C {
 	cPipeline :: IORef Pipeline.C.P,
 	unC :: C.C }
 
+instance Show C where
+	show c = "(C { cPipeline = <IORef>, unC :: " ++ show (unC c) ++ "})"
+
 newC :: C.C -> IO C
 newC c = C <$> newIORef nullPtr <*> pure c
 
