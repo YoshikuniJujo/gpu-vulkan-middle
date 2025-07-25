@@ -19,7 +19,7 @@ module Gpu.Vulkan.Middle.Internal (
 	ExtensionProperties(..), extensionPropertiesFromCore,
 	StencilOpState(..), stencilOpStateToCore,
 	ClearValue(..), ClearValueListToCore(..),
-	ClearValueToCore, ClearColorValueToCore(..),
+	ClearValueToCore(..), ClearColorValueToCore(..),
 	clearValueListToArray,
 	ClearType(..), ClearColorType(..),
 
@@ -223,6 +223,12 @@ data ClearValue (ct :: ClearType) where
 	ClearValueColor :: Rgba Float -> ClearValue ('ClearTypeColor cct)
 	ClearValueDepthStencil ::
 		C.ClearDepthStencilValue -> ClearValue 'ClearTypeDepthStencil
+
+instance Default (ClearValue ('ClearTypeColor cct)) where
+	def = ClearValueColor $ RgbaWord32 0 0 0 0
+
+instance Default (ClearValue 'ClearTypeDepthStencil) where
+	def = ClearValueDepthStencil $ C.ClearDepthStencilValue 0 0
 
 class ClearColorValueToCore (cct :: ClearColorType) where
 	clearColorValueToCore ::
