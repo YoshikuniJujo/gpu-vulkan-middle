@@ -61,6 +61,7 @@ library
       Gpu.Vulkan.Descriptor.Enum
       Gpu.Vulkan.Descriptor.Middle
       Gpu.Vulkan.DescriptorPool.Enum
+      Gpu.Vulkan.DescriptorPool.Middle
       Gpu.Vulkan.DescriptorPool.Middle.Internal
       Gpu.Vulkan.DescriptorSet.Middle
       Gpu.Vulkan.DescriptorSetLayout.Enum
@@ -152,7 +153,6 @@ library
       Gpu.Vulkan.BufferView.Middle.Internal
       Gpu.Vulkan.Component.Middle.Internal
       Gpu.Vulkan.Descriptor.Middle.Internal
-      Gpu.Vulkan.DescriptorPool.Middle
       Gpu.Vulkan.DescriptorSet.Middle.Internal
       Gpu.Vulkan.DescriptorSetLayout.BindingFlags.Middle.Internal
       Gpu.Vulkan.DescriptorSetLayout.Middle.Internal
