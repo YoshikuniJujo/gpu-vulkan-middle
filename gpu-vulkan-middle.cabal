@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.38.0.
+-- This file has been generated from package.yaml by hpack version 0.38.1.
 --
 -- see: https://github.com/sol/hpack
 
@@ -59,7 +59,7 @@ library
       Gpu.Vulkan.Descriptor.Enum
       Gpu.Vulkan.Descriptor.Middle
       Gpu.Vulkan.DescriptorPool.Enum
-      Gpu.Vulkan.DescriptorPool.Middle
+      Gpu.Vulkan.DescriptorPool.Middle.Internal
       Gpu.Vulkan.DescriptorSet.Middle
       Gpu.Vulkan.DescriptorSetLayout.Enum
       Gpu.Vulkan.DescriptorSetLayout.Middle
@@ -93,6 +93,7 @@ library
       Gpu.Vulkan.PhysicalDevice.Struct
       Gpu.Vulkan.PipelineCache.Enum
       Gpu.Vulkan.PipelineCache.Middle
+      Gpu.Vulkan.PipelineCache.Middle.Internal
       Gpu.Vulkan.Pipeline.ColorBlendAttachment.Middle
       Gpu.Vulkan.Pipeline.ColorBlendState.Middle
       Gpu.Vulkan.Pipeline.Compute.Middle
@@ -122,6 +123,7 @@ library
       Gpu.Vulkan.QueueFamily.Middle
       Gpu.Vulkan.RenderPass.Enum
       Gpu.Vulkan.RenderPass.Middle
+      Gpu.Vulkan.RenderPass.Middle.Internal
       Gpu.Vulkan.Sample.Enum
       Gpu.Vulkan.Sample.Middle
       Gpu.Vulkan.Sampler.Enum
@@ -131,6 +133,7 @@ library
       Gpu.Vulkan.ShaderModule.Middle
       Gpu.Vulkan.Subpass.Enum
       Gpu.Vulkan.Subpass.Middle
+      Gpu.Vulkan.Subpass.Middle.Internal
       Gpu.Vulkan.VertexInput.Enum
       Gpu.Vulkan.VertexInput.Middle
       Gpu.Vulkan.Sparse.Enum
@@ -146,7 +149,7 @@ library
       Gpu.Vulkan.CommandPool.Middle.Internal
       Gpu.Vulkan.Component.Middle.Internal
       Gpu.Vulkan.Descriptor.Middle.Internal
-      Gpu.Vulkan.DescriptorPool.Middle.Internal
+      Gpu.Vulkan.DescriptorPool.Middle
       Gpu.Vulkan.DescriptorSet.Middle.Internal
       Gpu.Vulkan.DescriptorSetLayout.BindingFlags.Middle.Internal
       Gpu.Vulkan.DescriptorSetLayout.Middle.Internal
@@ -174,13 +177,11 @@ library
       Gpu.Vulkan.Pipeline.TessellationState.Middle.Internal
       Gpu.Vulkan.Pipeline.VertexInputState.Middle.Internal
       Gpu.Vulkan.Pipeline.ViewportState.Middle.Internal
-      Gpu.Vulkan.PipelineCache.Middle.Internal
       Gpu.Vulkan.PipelineLayout.Middle.Internal
       Gpu.Vulkan.PushConstant.Middle.Internal
       Gpu.Vulkan.QueryPool.Middle.Internal
       Gpu.Vulkan.QueueFamily.EnumManual
       Gpu.Vulkan.QueueFamily.Middle.Internal
-      Gpu.Vulkan.RenderPass.Middle.Internal
       Gpu.Vulkan.Sample.Middle.Internal
       Gpu.Vulkan.Sampler.Middle.Internal
       Gpu.Vulkan.ShaderModule.Middle.Internal
@@ -188,7 +189,6 @@ library
       Gpu.Vulkan.Sparse.Image.Middle.Internal
       Gpu.Vulkan.Sparse.Middle.Internal
       Gpu.Vulkan.Specialization.Middle.Internal
-      Gpu.Vulkan.Subpass.Middle.Internal
       Gpu.Vulkan.VertexInput.Middle.Internal
       Paths_gpu_vulkan_middle
   hs-source-dirs:

@@ -96,7 +96,7 @@ library:
   - Gpu.Vulkan.Descriptor.Enum
   - Gpu.Vulkan.Descriptor.Middle
   - Gpu.Vulkan.DescriptorPool.Enum
-  - Gpu.Vulkan.DescriptorPool.Middle
+  - Gpu.Vulkan.DescriptorPool.Middle.Internal
   - Gpu.Vulkan.DescriptorSet.Middle
   - Gpu.Vulkan.DescriptorSetLayout.Enum
   - Gpu.Vulkan.DescriptorSetLayout.Middle
@@ -130,6 +130,7 @@ library:
   - Gpu.Vulkan.PhysicalDevice.Struct
   - Gpu.Vulkan.PipelineCache.Enum
   - Gpu.Vulkan.PipelineCache.Middle
+  - Gpu.Vulkan.PipelineCache.Middle.Internal
   - Gpu.Vulkan.Pipeline.ColorBlendAttachment.Middle
   - Gpu.Vulkan.Pipeline.ColorBlendState.Middle
   - Gpu.Vulkan.Pipeline.Compute.Middle
@@ -159,6 +160,7 @@ library:
   - Gpu.Vulkan.QueueFamily.Middle
   - Gpu.Vulkan.RenderPass.Enum
   - Gpu.Vulkan.RenderPass.Middle
+  - Gpu.Vulkan.RenderPass.Middle.Internal
   - Gpu.Vulkan.Sample.Enum
   - Gpu.Vulkan.Sample.Middle
   - Gpu.Vulkan.Sampler.Enum
@@ -168,6 +170,7 @@ library:
   - Gpu.Vulkan.ShaderModule.Middle
   - Gpu.Vulkan.Subpass.Enum
   - Gpu.Vulkan.Subpass.Middle
+  - Gpu.Vulkan.Subpass.Middle.Internal
   - Gpu.Vulkan.VertexInput.Enum
   - Gpu.Vulkan.VertexInput.Middle
   - Gpu.Vulkan.Sparse.Enum
