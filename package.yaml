@@ -88,8 +88,10 @@ library:
   - Gpu.Vulkan.Cmd.Middle
   - Gpu.Vulkan.CommandBuffer.Enum
   - Gpu.Vulkan.CommandBuffer.Middle
+  - Gpu.Vulkan.CommandBuffer.Middle.Internal
   - Gpu.Vulkan.CommandPool.Enum
   - Gpu.Vulkan.CommandPool.Middle
+  - Gpu.Vulkan.CommandPool.Middle.Internal
   - Gpu.Vulkan.Component.Enum
   - Gpu.Vulkan.Component.Middle
   - Gpu.Vulkan.Data.Middle
@@ -113,17 +115,20 @@ library:
   - Gpu.Vulkan.Fence.Middle.Internal
   - Gpu.Vulkan.Framebuffer.Enum
   - Gpu.Vulkan.Framebuffer.Middle
+  - Gpu.Vulkan.Framebuffer.Middle.Internal
   - Gpu.Vulkan.Image.Enum
   - Gpu.Vulkan.Image.Middle
   - Gpu.Vulkan.Image.Middle.Internal
   - Gpu.Vulkan.ImageView.Enum
   - Gpu.Vulkan.ImageView.Middle
+  - Gpu.Vulkan.ImageView.Middle.Internal
   - Gpu.Vulkan.Instance.Enum
   - Gpu.Vulkan.Instance.Middle
   - Gpu.Vulkan.Instance.Middle.Internal
   - Gpu.Vulkan.Memory.Enum
   - Gpu.Vulkan.Memory.Middle
   - Gpu.Vulkan.Middle
+  - Gpu.Vulkan.Middle.Internal
   - Gpu.Vulkan.PhysicalDevice.Enum
   - Gpu.Vulkan.PhysicalDevice.Middle
   - Gpu.Vulkan.PhysicalDevice.Middle.Internal
