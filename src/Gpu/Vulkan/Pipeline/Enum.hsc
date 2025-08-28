@@ -25,6 +25,8 @@ enum "BindPoint" ''#{type VkPipelineBindPoint}
 		#{const VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR}),
 	("BindPointSubpassShadingHuawei",
 		#{const VK_PIPELINE_BIND_POINT_SUBPASS_SHADING_HUAWEI}),
+	("BindPointDataGraphArm",
+		#{const VK_PIPELINE_BIND_POINT_DATA_GRAPH_ARM}),
 	("BindPointRayTracingNv",
 		#{const VK_PIPELINE_BIND_POINT_RAY_TRACING_NV}),
 	("BindPointMaxEnum", #{const VK_PIPELINE_BIND_POINT_MAX_ENUM}) ]
@@ -248,7 +250,9 @@ enum "StageFlagBits2" ''#{type VkPipelineStageFlagBits2}
 	("Stage2OpticalFlowBitNv",
 		#{const VK_PIPELINE_STAGE_2_OPTICAL_FLOW_BIT_NV}),
 	("Stage2ConvertCooperativeVectorMatrixBitNv",
-		#{const VK_PIPELINE_STAGE_2_CONVERT_COOPERATIVE_VECTOR_MATRIX_BIT_NV}) ]
+		#{const VK_PIPELINE_STAGE_2_CONVERT_COOPERATIVE_VECTOR_MATRIX_BIT_NV}),
+	("Stage2DataGraphBitArm",
+		#{const VK_PIPELINE_STAGE_2_DATA_GRAPH_BIT_ARM}) ]
 
 instance Default StageFlagBits2 where
 	def = StageFlags2Zero
@@ -320,6 +324,8 @@ enum "CreateFlagBits" ''#{type VkPipelineCreateFlagBits}
 		#{const VK_PIPELINE_CREATE_DISPATCH_BASE}),
 	("CreateViewIndexFromDeviceIndexBitKhr",
 		#{const VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT_KHR}),
+	("CreateDispatchBaseBitKhr",
+		#{const VK_PIPELINE_CREATE_DISPATCH_BASE_BIT_KHR}),
 	("CreateDispatchBaseKhr",
 		#{const VK_PIPELINE_CREATE_DISPATCH_BASE_KHR}),
 	("RasterizationStateCreateFragmentDensityMapAttachmentBitExt",

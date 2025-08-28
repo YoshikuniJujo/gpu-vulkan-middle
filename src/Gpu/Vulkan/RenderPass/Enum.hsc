@@ -21,6 +21,8 @@ enum "CreateFlagBits" ''#{type VkRenderPassCreateFlagBits}
 	("CreateFlagsZero", 0),
 	("CreateTransformBitQcom",
 		#{const VK_RENDER_PASS_CREATE_TRANSFORM_BIT_QCOM}),
+	("CreatePerLayerFragmentDensityBitValve",
+		#{const VK_RENDER_PASS_CREATE_PER_LAYER_FRAGMENT_DENSITY_BIT_VALVE}),
 	("CreateFlagBitsMaxEnum",
 		#{const VK_RENDER_PASS_CREATE_FLAG_BITS_MAX_ENUM}) ]
 

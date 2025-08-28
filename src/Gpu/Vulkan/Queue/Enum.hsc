@@ -27,6 +27,7 @@ enum "FlagBits" ''#{type VkQueueFlagBits}
 	("VideoDecodeBitKhr", #{const VK_QUEUE_VIDEO_DECODE_BIT_KHR}),
 	("VideoEncodeBitKhr", #{const VK_QUEUE_VIDEO_ENCODE_BIT_KHR}),
 	("OpticalFlowBitNv", #{const VK_QUEUE_OPTICAL_FLOW_BIT_NV}),
+	("DataGraphBitArm", #{const VK_QUEUE_DATA_GRAPH_BIT_ARM}),
 	("FlagBitsMaxEnum", #{const VK_QUEUE_FLAG_BITS_MAX_ENUM}) ]
 
 type Flags = FlagBits

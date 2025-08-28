@@ -49,6 +49,7 @@ enum "Type" ''#{type VkDescriptorType}
 		#{const VK_DESCRIPTOR_TYPE_SAMPLE_WEIGHT_IMAGE_QCOM}),
 	("TypeBlockMatchImageQcom",
 		#{const VK_DESCRIPTOR_TYPE_BLOCK_MATCH_IMAGE_QCOM}),
+	("TypeTensorArm", #{const VK_DESCRIPTOR_TYPE_TENSOR_ARM}),
 	("TypeMutableExt", #{const VK_DESCRIPTOR_TYPE_MUTABLE_EXT}),
 	("TypePartitionedAccelerationStructureNv",
 		#{const VK_DESCRIPTOR_TYPE_PARTITIONED_ACCELERATION_STRUCTURE_NV}),
