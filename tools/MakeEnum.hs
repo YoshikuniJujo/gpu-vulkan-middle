@@ -116,6 +116,7 @@ makeEnum :: HeaderCode -> (HaskellName, CName, [DerivName]) -> HaskellCode
 makeEnum src (hsnm, cnm, drvs) = body hsnm cnm drvs ++
 	intercalate ",\n"
 		(map makeItem . takeDefinition cnm
+			. removeOhos
 			. removeBetaExtensions . filterOutCommentLine $ lines src ) ++
 		" ]\n"
 
@@ -123,6 +124,7 @@ makeEnum' :: HeaderCode -> ModuleName -> [(String, Const)] -> (HaskellName, CNam
 makeEnum' src mnm elms (hsnm, cnm, drvs) = body hsnm cnm drvs ++
 	intercalate ",\n"
 		(map (makeItem' mnm) . (elms ++) . removeDups [] . map makeVarConstPair . takeDefinition cnm
+			. removeOhos
 			. removeBetaExtensions . filterOutCommentLine $ lines src ) ++
 		" ]\n"
 
@@ -131,6 +133,7 @@ makeEnum2 src mnm un elms (hsnm, cnm, drvs) = body hsnm cnm drvs ++
 	intercalate ",\n"
 		(map (makeItem' mnm) . (elms ++) . removeDups [] . map makeVarConstPair
 			. (useEnum takeDefinition takeDefinition2 un) cnm
+			. removeOhos
 			. removeBetaExtensions . filterOutCommentLine $ lines src ) ++
 		" ]\n"
 
@@ -192,6 +195,9 @@ removeBetaExtensions ("#ifdef VK_ENABLE_BETA_EXTENSIONS" : ls) =
 		[] -> error "no #endif"
 		(_ : ls') -> removeBetaExtensions ls'
 removeBetaExtensions (l : ls) = l : removeBetaExtensions ls
+
+removeOhos :: [String] -> [String]
+removeOhos = filter (not . ("_OHOS" `isSuffixOf`) . head . words)
 
 makeEnum'' :: String -> [String] -> String -> String -> [(String, Const)] -> [String] -> String -> IO ()
 makeEnum'' hf icds hsnm cnm elms drvs ext = do

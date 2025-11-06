@@ -2243,8 +2243,6 @@ enum "StructureType" ''#{type VkStructureType}
 		#{const VK_STRUCTURE_TYPE_VIDEO_DECODE_H265_INLINE_SESSION_PARAMETERS_INFO_KHR}),
 	("StructureTypeVideoDecodeAv1InlineSessionParametersInfoKhr",
 		#{const VK_STRUCTURE_TYPE_VIDEO_DECODE_AV1_INLINE_SESSION_PARAMETERS_INFO_KHR}),
-	("StructureTypeOhSurfaceCreateInfoOhos",
-		#{const VK_STRUCTURE_TYPE_OH_SURFACE_CREATE_INFO_OHOS}),
 	("StructureTypePhysicalDeviceHdrVividFeaturesHuawei",
 		#{const VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HDR_VIVID_FEATURES_HUAWEI}),
 	("StructureTypeHdrVividDynamicMetadataHuawei",
