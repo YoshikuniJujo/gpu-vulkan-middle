@@ -34,7 +34,7 @@ packages:
     hackage: typecheck-plugin-nat-simple-0.1.0.12
 snapshots:
 - completed:
-    sha256: aed20a74b586cf692559f427c3b81275ae15accd022f9ed8d237aa821ba767ba
-    size: 705113
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2025/11/4.yaml
-  original: nightly-2025-11-04
+    sha256: d35a7790de8c69a8f3e91db8ebb609e08a412265ebc6292dd449f75b16ac146c
+    size: 715416
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2025/12/24.yaml
+  original: nightly-2025-12-24
